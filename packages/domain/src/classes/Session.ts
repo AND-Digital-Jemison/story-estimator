@@ -1,12 +1,13 @@
-import { User } from '~/modules/common/dto/User';
-import { GameRound } from '~/modules/common/dto/GameRound';
+import { GameRound } from "./GameRound";
+import { User } from "./User";
 
 export class Session {
   id: string;
   users: User[];
   rounds: GameRound[];
 
-  constructor() {
+  constructor(id: string) {
+    this.id = id;
     this.users = [];
     this.rounds = [];
   }

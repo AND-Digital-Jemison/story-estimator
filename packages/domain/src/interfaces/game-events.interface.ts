@@ -1,4 +1,4 @@
-import { Session } from '~/modules/common/dto/Session';
+import { Session } from "../classes";
 
 export interface GameEvents {
   create: (name: string, title?: string) => Session;
