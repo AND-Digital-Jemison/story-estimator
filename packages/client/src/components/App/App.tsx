@@ -34,6 +34,7 @@ export const App: FC<unknown> = () => {
     <>
       <div>
         Here we use a <code>Dictionary&lt;number&gt;</code> interface from the{' '}
+        <pre>hello team!</pre>
         <code>@nest-react/domain</code> package:
         <pre>{JSON.stringify(dictExample)}</pre>
       </div>

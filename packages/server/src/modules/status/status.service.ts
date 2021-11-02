@@ -25,6 +25,7 @@ export class StatusService {
         if (key !== 'CLIENT_VERSION') {
           agg[key] = value;
         }
+        agg.test = 'hello again';
         return agg;
       }, {} as Dictionary<string>);
   }
