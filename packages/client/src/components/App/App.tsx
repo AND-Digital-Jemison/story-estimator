@@ -3,6 +3,7 @@ import {
   Routes,
   Route
 } from "react-router-dom";
+import { Landing } from '../landing/Landing';
 
 import { API_URL } from '~/config';
 import { Logger, checkServerVersion } from '~/utils';
