@@ -1,12 +1,21 @@
-import React from "react"
+import React from 'react';
 
 export const Landing = () => {
-    return (
-        <>
-            <form>
-                <label>Name:</label>
-                <input type="text" name="name" />
-            </form>
-        </>
-    )
-}
+  return (
+    <>
+      <h1>Planning Poker</h1>
+      <form>
+        <label>Name:</label>
+        <input type="text" name="name" />
+        <label>Round Name:</label>
+        <input type="text" name="round-name" />
+        <button>CREATE</button>
+      </form>
+      <form>
+        <label>Got a room code?</label>
+        <input type="text" name="round-name" />
+        <button>JOIN</button>
+      </form>
+    </>
+  );
+};
