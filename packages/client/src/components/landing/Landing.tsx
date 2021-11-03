@@ -13,7 +13,7 @@ export const Landing = () => {
       </form>
       <form>
         <label>Got a room code?</label>
-        <input type="text" name="round-name" />
+        <input type="text" name="room-code-name" />
         <button>JOIN</button>
       </form>
     </>

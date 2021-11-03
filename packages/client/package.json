@@ -20,6 +20,7 @@
     "@testing-library/jest-dom": "^5.15.0",
     "@types/jest": "^27.0.2",
     "@types/node": "^16.11.6",
+    "axios": "^0.24.0",
     "debug": "^4.3.1",
     "history": "5",
     "jest": "^27.3.1",
