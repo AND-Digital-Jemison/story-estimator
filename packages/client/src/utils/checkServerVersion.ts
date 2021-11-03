@@ -1,10 +1,10 @@
-import satisfies from 'semver/functions/satisfies';
+import { satisfies } from "semver";
+import { API_URL } from "~/config";
+import { Logger } from "~/utils/logger";
 
-import { API_URL } from '~/config';
-
-import { Logger } from './logger';
 
 function isServerVersionSatisfying(serverVersion: string): boolean {
+  Logger.log(serverVersion, __REQUIRED_SERVER_VERSION__)
   return satisfies(serverVersion, __REQUIRED_SERVER_VERSION__);
 }
 

@@ -1,2 +1,2 @@
 export * from './dictionary.interface';
-export * from './GameEvents.interface';
+export * from './game-events.interface';

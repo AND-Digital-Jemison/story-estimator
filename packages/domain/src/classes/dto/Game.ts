@@ -1,5 +1,3 @@
-import { Session } from "./Session";
-
 export class Game {
   session: Session;
   lastInteractionTime: Date;
@@ -9,4 +7,6 @@ export class Game {
     this.lastInteractionTime = new Date();
   }
 }
+
+import { Session } from "./Session";
 

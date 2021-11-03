@@ -22,7 +22,7 @@
     "semver": "^7.3.4"
   },
   "peerDependencies": {
-    "@nest-react/server": "1.0.0"
+    "@and-digital/story-estimator-server": "1.0.0"
   },
   "devDependencies": {
     "@types/debug": "^4.1.5",

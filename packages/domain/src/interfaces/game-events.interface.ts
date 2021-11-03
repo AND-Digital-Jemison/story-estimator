@@ -1,9 +1,13 @@
-import { Session } from "../classes";
+import { JoinGameEvent, NewGameEvent } from "../classes";
+import {  Session } from "../classes/dto";
 
 export interface GameEvents {
-  create: (name: string, title?: string) => Session;
-  join: (name: string, code: string) => Session;
+  create: (newGameEvent: NewGameEvent) => Session;
+  join: (joinGameEvent: JoinGameEvent) => Session;
   point: (userId: number, gameId: number, point: string) => Session;
   complete: (gameId: number, point: string) => Session;
   end: (game: number) => void;
 }
+
+// export type GameEvent = NewGameEvent | JoinGameEvent;
+

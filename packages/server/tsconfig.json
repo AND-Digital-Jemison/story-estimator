@@ -7,6 +7,10 @@
     "paths": {
       "~/*": ["src/*"]
     },
-    "strictPropertyInitialization": false
+    "strictPropertyInitialization": false,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "target": "ES2015",
+    "type": "module"
   }
 }
