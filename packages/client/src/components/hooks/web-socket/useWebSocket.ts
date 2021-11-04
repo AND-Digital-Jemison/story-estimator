@@ -1,6 +1,7 @@
-import { useCallback, useMemo, useState } from "react"
+import { useCallback, useState } from "react"
+import { WebSocket } from "./types";
 
-const useWebSocket = (socketUrl: string) => {
+const useWebSocket = (socketUrl: string): WebSocket => {
     const [response, setResponse] = useState({});
     const socket = new WebSocket(socketUrl);
 
