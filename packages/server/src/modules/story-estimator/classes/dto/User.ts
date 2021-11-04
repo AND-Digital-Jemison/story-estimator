@@ -3,6 +3,7 @@ import { Round } from "./Round";
 export class User {
   public id: number;
   public name: string;
+
   public round: Round;
 
   constructor(id: number, name: string) {
@@ -11,3 +12,5 @@ export class User {
     this.round = new Round();
   }
 }
+
+
