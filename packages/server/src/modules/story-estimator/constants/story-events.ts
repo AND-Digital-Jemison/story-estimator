@@ -1,5 +1,11 @@
 export enum StoryEvents {
-  create, join, point, complete, end, test
+  connected= 'connected',
+  disonnected= 'disonnected',
+  create = "create",
+  join = "join",
+  point = "point",
+  complete = "complete",
+  end = "end"
 }
 
 

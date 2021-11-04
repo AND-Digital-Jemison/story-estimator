@@ -1,4 +1,4 @@
-import { StoryEvents } from "../../constants";
+import { StoryEvents } from "~/modules/story-estimator/constants/story-events";
 
 export class NewGameEvent {
   event = StoryEvents.create;
