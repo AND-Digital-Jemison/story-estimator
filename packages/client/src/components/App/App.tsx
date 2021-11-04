@@ -1,7 +1,8 @@
 import React, { FC, useEffect, useState } from 'react';
 import {
-  Routes,
-  Route
+  BrowserRouter as Router,
+  Route,
+  Switch
 } from "react-router-dom";
 import { Landing } from '../landing/Landing';
 
@@ -30,8 +31,10 @@ export const App: FC<unknown> = () => {
   }, []);
 
   return (
-    <Routes>
-      <Route path="/" element={<Landing />}></Route>
-    </Routes>
+    <Router>
+      <Switch>
+        <Route path="/" exact={true} render={() => <Landing />}></Route>
+      </Switch>
+    </Router>
   );
 };
