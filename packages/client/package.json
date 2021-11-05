@@ -33,7 +33,7 @@
     "ts-jest": "^27.0.7"
   },
   "peerDependencies": {
-    "@nest-react/server": "1.0.0"
+    "@and-digital/story-estimator-server": "1.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.16.0",

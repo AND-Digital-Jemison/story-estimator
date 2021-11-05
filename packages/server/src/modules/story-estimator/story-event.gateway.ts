@@ -1,0 +1,58 @@
+
+ // import { GameEvent } from "@nest-react/domain";
+import { Logger } from "@nestjs/common";
+import { MessageBody, OnGatewayConnection, OnGatewayDisconnect, SubscribeMessage, WebSocketGateway, WebSocketServer } from "@nestjs/websockets";
+import { Server, WebSocket } from "ws";
+ import { StoryEvents } from "~/modules/story-estimator/constants/story-events";
+import { StoryEventFactoryService } from "~/modules/story-estimator/story-event-factory.service";
+
+@WebSocketGateway(8001)
+export class StoryEventGateway implements OnGatewayConnection, OnGatewayDisconnect {
+  @WebSocketServer()
+  private server: Server;
+//  private clients: WebSocket[] = [];
+  private readonly logger = new Logger(StoryEventGateway.name);
+
+  constructor(private readonly eventFactory: StoryEventFactoryService) {
+  }
+
+  handleConnection(client: WebSocket): void {
+    this.logger.log("handleConnection");
+  //  this.clients.push(client);
+    // TODO
+
+    client.send(JSON.stringify({event: StoryEvents.connected}));
+  }
+
+  handleDisconnect(client: WebSocket): void {
+    this.logger.log("handleDisconnect");
+    // TODO
+    /*
+      find client
+      remove them from the game
+     */
+
+   /* for (let i = 0; i < this.clients.length; i++) {
+      if (this.clients[i] === client) {
+        this.clients.splice(i, 1);
+        break;
+      }
+    }
+    client.send({event: StoryEvents.disonnected});*/
+  }
+
+  @SubscribeMessage("story-event-listener")
+  onEvent(client: WebSocket, data: any): void {
+    this.eventFactory.handle(client, data);
+   // this.broadcast(session);
+  }
+
+
+  private broadcast(message: any): void {
+   /* const broadCastMessage = JSON.stringify(message);
+    for (const client of this.clients) {
+      this.logger.log("broadcast", broadCastMessage);
+      client.send(broadCastMessage);
+    }*/
+  }
+}
