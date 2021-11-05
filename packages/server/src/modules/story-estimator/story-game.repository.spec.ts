@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { StoryGameRepository } from "~/modules/story-estimator/story-game.repository";
+import { StoryGameRepository } from "./story-game.repository";
 
 describe('StoryGame.RepositoryService', () => {
   let service: StoryGameRepository;

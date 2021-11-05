@@ -4,13 +4,22 @@
     "baseUrl": ".",
     "emitDecoratorMetadata": true,
     "outDir": "dist",
-    "paths": {
-      "~/*": ["src/*"]
-    },
     "strictPropertyInitialization": false,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "target": "ES2015",
-    "type": "module"
-  }
+    "moduleResolution": "node"
+  },
+  "exclude": [
+    "**/node_modules/*", "**/dist/*", "scripts/*", "./node_modules",
+    "../../node_modules/*", "./dist/*",
+    "**/*.test.ts", "**/*.spec.ts", "**/*.dev.ts", "node_modules","./test/*",
+    "node_modules",
+    "dist",
+    "test",
+    "**/*spec.ts",
+    "**/*dev.ts",
+    "**/*test.ts",
+    "src/client"
+  ]
 }

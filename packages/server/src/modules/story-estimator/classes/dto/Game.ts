@@ -1,6 +1,6 @@
 import { Logger } from "@nestjs/common";
-import { Session } from "~/modules/story-estimator/classes/dto/Session";
 import { WebSocket } from "ws";
+import { Session } from "./Session";
 
 export class Game {
   private readonly logger = new Logger(Game.name);

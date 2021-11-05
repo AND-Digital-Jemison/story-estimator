@@ -1,12 +1,12 @@
-import { StoryEvents } from "~/modules/story-estimator/constants/story-events";
+import { StoryEvents } from "../../constants/story-events";
 
 export class JoinGameEvent {
   event = StoryEvents.join;
-  name: string;
+  userName: string;
   gameId: string;
 
   constructor(name: string, gameId: string) {
-    this.name = name;
+    this.userName = name;
     this.gameId = gameId;
   }
 }
