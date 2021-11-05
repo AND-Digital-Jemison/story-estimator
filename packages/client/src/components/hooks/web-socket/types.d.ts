@@ -1,6 +1,5 @@
-
-export interface WebSocket {
+export interface Socket {
     connect: () => void;
-    response: {};
+    response: Record<string, unknown>;
     send: (data: any) => void;
 }

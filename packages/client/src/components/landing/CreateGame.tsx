@@ -1,18 +1,16 @@
-import React, { useState } from "react"
-import { WebSocket } from "../hooks/web-socket/types";
+import React, { useEffect, useState } from 'react';
+import { Socket } from '../hooks/web-socket/types';
 
-export const CreateGame = (props: {
-    socket: WebSocket
-}) => {
+export const CreateGame = (props: { socket: Socket }) => {
     const { socket } = props;
     const [newGameData, setNewGameData] = useState({
         name: '',
-        roundName: ''
-    })
+        roundName: '',
+    });
 
     const handleClick = () => {
-        socket.send(newGameData)
-    }
+        socket.send(newGameData);
+    };
 
     return (
         <form>
@@ -21,16 +19,20 @@ export const CreateGame = (props: {
                 type="text"
                 name="name"
                 value={newGameData.name}
-                onChange={(event) => setNewGameData({ ...newGameData, name: event.target.value })}
+                onChange={event =>
+                    setNewGameData({ ...newGameData, name: event.target.value })
+                }
             />
 
             <label>Round Name:</label>
             <input
                 type="text"
                 name="round-name"
-                onChange={(event) => setNewGameData({ ...newGameData, roundName: event.target.value })}
+                onChange={event =>
+                    setNewGameData({ ...newGameData, roundName: event.target.value })
+                }
             />
             <button onClick={handleClick}>CREATE</button>
         </form>
-    )
-}
+    );
+};
