@@ -3,8 +3,8 @@
 import { Logger } from "@nestjs/common";
 import { MessageBody, OnGatewayConnection, OnGatewayDisconnect, SubscribeMessage, WebSocketGateway, WebSocketServer } from "@nestjs/websockets";
 import { Server, WebSocket } from "ws";
- import { StoryEvents } from "~/modules/story-estimator/constants/story-events";
-import { StoryEventFactoryService } from "~/modules/story-estimator/story-event-factory.service";
+ import { StoryEvents } from "./constants/story-events";
+ import { StoryEventFactoryService } from "./story-event-factory.service";
 
 @WebSocketGateway(8001)
 export class StoryEventGateway implements OnGatewayConnection, OnGatewayDisconnect {
@@ -17,7 +17,7 @@ export class StoryEventGateway implements OnGatewayConnection, OnGatewayDisconne
   }
 
   handleConnection(client: WebSocket): void {
-    this.logger.log("handleConnection");
+    this.logger.log("handleConnection hello");
   //  this.clients.push(client);
     // TODO
 
@@ -44,15 +44,6 @@ export class StoryEventGateway implements OnGatewayConnection, OnGatewayDisconne
   @SubscribeMessage("story-event-listener")
   onEvent(client: WebSocket, data: any): void {
     this.eventFactory.handle(client, data);
-   // this.broadcast(session);
   }
 
-
-  private broadcast(message: any): void {
-   /* const broadCastMessage = JSON.stringify(message);
-    for (const client of this.clients) {
-      this.logger.log("broadcast", broadCastMessage);
-      client.send(broadCastMessage);
-    }*/
-  }
 }

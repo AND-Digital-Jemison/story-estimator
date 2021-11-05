@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Game } from "~/modules/story-estimator/classes/dto";
+import { Game } from "./classes/dto/Game";
 
 @Injectable()
 export class StoryGameRepository {

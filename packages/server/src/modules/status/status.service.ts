@@ -3,8 +3,8 @@ import { readFileSync } from 'fs';
 import { Injectable, Logger } from '@nestjs/common';
 
 import { Dictionary } from '@nest-react/domain';
+import { ConfigService } from "../config/config.service";
 
-import { ConfigService } from '~/modules/config/config.service';
 
 @Injectable()
 export class StatusService {

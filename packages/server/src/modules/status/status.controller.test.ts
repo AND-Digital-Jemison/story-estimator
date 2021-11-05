@@ -1,6 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-
-import { ConfigService } from '~/modules/config/config.service';
+import { ConfigService } from "../config/config.service";
 import { StatusController } from './status.controller';
 import { StatusService } from './status.service';
 

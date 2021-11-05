@@ -1,7 +1,8 @@
 import { NestFactory } from '@nestjs/core';
 import { WsAdapter } from '@nestjs/platform-ws';
-import { ConfigService } from '~/modules/config/config.service';
-import { APIModule } from './modules/api.module';
+import { APIModule } from "./modules/api.module";
+import { ConfigService } from "./modules/config/config.service";
+declare const module: any;
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(APIModule);
@@ -13,6 +14,12 @@ async function bootstrap(): Promise<void> {
   app.useWebSocketAdapter(new WsAdapter(app));
 
   await app.listen(config.port);
+
+  if (module.hot) {
+    console.log('module is hot');
+    module.hot.accept();
+    module.hot.dispose(() => app.close());
+  }
 }
 
 bootstrap();
