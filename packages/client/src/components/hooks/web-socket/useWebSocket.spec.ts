@@ -9,7 +9,7 @@ describe('When sending data to a socket', () => {
   it('should be sent successfully', async () => {
     const mockData = { test: '123' };
 
-    const { result } = renderHook(() => useWebSocket(mockSocketUrl));
+    const { result } = renderHook(() => useWebSocket());
     await mockSocketServer.connected;
 
     act(() => result.current.send(mockData));
@@ -23,7 +23,7 @@ describe('When sending data to a socket', () => {
   it('should receive messages from the server', async () => {
     const mockResponse = { test: '123' };
 
-    const { result } = renderHook(() => useWebSocket(mockSocketUrl));
+    const { result } = renderHook(() => useWebSocket());
     await mockSocketServer.connected;
 
     act(() => result.current.connect());
