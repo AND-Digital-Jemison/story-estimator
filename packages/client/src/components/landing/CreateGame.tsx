@@ -1,38 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import { Socket } from '../hooks/web-socket/types';
+import React, { useState } from 'react';
+import { UserModel } from '~/models/UserModel';
 import useWebSocket from '../hooks/web-socket/useWebSocket';
 
 export const CreateGame = () => {
-  const [newGameData, setNewGameData] = useState({
-    name: '',
-    roundName: '',
-  });
-
+  const [user, setUser] = useState<UserModel>();
   const socket = useWebSocket();
 
   const handleClick = () => {
-    socket.send(newGameData);
+    socket.send(user);
   };
 
   return (
     <form>
-      <label>Name:</label>
+      <label htmlFor="username-input">Name:</label>
       <input
+        id="username-input"
         type="text"
-        name="user-name"
-        value={newGameData.name}
-        onChange={event =>
-          setNewGameData({ ...newGameData, name: event.target.value })
-        }
-      />
-
-      <label>Round Name:</label>
-      <input
-        type="text"
-        name="round-name"
-        onChange={event =>
-          setNewGameData({ ...newGameData, roundName: event.target.value })
-        }
+        onChange={(e) => setUser({ ...user, name: e.target.value })}
       />
       <button onClick={handleClick}>CREATE</button>
     </form>
