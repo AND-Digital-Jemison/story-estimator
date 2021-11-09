@@ -1,11 +1,16 @@
 import React from 'react';
 import useWebSocket from '../hooks/web-socket/useWebSocket';
 import { CreateGame } from './CreateGame';
+import styled from 'styled-components';
+
+const Title = styled.h1`
+  color: #2897ff;
+`;
 
 export const Landing = () => {
   return (
     <>
-      <h1>Planning Poker</h1>
+      <Title>Planning Poker</Title>
       <CreateGame />
       <form>
         <label>Got a room code?</label>
