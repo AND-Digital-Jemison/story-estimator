@@ -1,11 +1,18 @@
-import React, {useEffect, useState} from 'react';
-import {Socket} from '../hooks/web-socket/types';
+import React, { useEffect, useState } from 'react';
+import { Socket } from '../hooks/web-socket/types';
 import useWebSocket from '../hooks/web-socket/useWebSocket';
+import {
+  Button,
+  ButtonContainer,
+  FormContainer,
+  Input,
+  Label,
+} from '../../styling/landing-styles';
 
 export const CreateGame = () => {
   const [createGameData, setCreateGameData] = useState({
     name: '',
-    roundName: '',
+    storyName: '',
   });
   const socket = useWebSocket();
 
@@ -14,16 +21,22 @@ export const CreateGame = () => {
   };
 
   return (
-    <form>
-      <label>Round Name:</label>
-      <input
+    <FormContainer>
+      <Label htmlFor = "story-name">Story Name</Label>
+      <Input
         type="text"
-        name="round-name"
+        id="story-name"
+        name="story-name"
         onChange={event =>
-          setCreateGameData({...createGameData, roundName: event.target.value})
+          setCreateGameData({
+            ...createGameData,
+            storyName: event.target.value,
+          })
         }
       />
-      <button onClick={handleClick}>CREATE</button>
-    </form>
+      <ButtonContainer>
+        <Button create onClick={handleClick}>CREATE GAME</Button>
+      </ButtonContainer>
+    </FormContainer>
   );
 };
