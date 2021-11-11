@@ -1,6 +1,7 @@
 import React from 'react';
 import useWebSocket from '../hooks/web-socket/useWebSocket';
 import { CreateGame } from './CreateGame';
+import { JoinGame } from './JoinGame';
 import styled from 'styled-components';
 
 const Title = styled.h1`
@@ -29,12 +30,8 @@ export const Landing = () => {
     <Body>
       <Main>
         <Title>Planning Poker</Title>
+        <JoinGame />
         <CreateGame />
-        <form>
-          <label>Got a room code?</label>
-          <input type="text" name="room-code-name" />
-          <button>JOIN</button>
-        </form>
       </Main>
     </Body>
   );
