@@ -57,10 +57,6 @@ export const Input = styled.input`
   margin-bottom: 15px;
 `;
 
-export const RoomCodeInput = styled(Input)`
-  width: 60%;
-`;
-
 export const PathContainer = styled.div`
   display: flex;
   justify-content: space-between;
