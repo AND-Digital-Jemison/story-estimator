@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import { WebSocket } from "ws";
 import { Game } from "./classes/dto/Game";
-import { GameRound } from "./classes/dto/GameRound";
 import { Round } from "./classes/dto/Round";
+import { UserRound } from "./classes/dto/UserRound";
 import { Session } from "./classes/dto/Session";
 import { User } from "./classes/dto/User";
 import { CompleteRoundEvent } from "./classes/events/complete-round-event";
@@ -16,17 +16,17 @@ import { StoryGameRepository } from "./story-game.repository";
 export class StoryEventHandlerService {
 
   constructor(private readonly storyGameRepository: StoryGameRepository,
-              private readonly storyGameService: StoryGameIdGeneratorService) {
+    private readonly storyGameService: StoryGameIdGeneratorService) {
   }
 
   complete(event: CompleteRoundEvent) {
     const game = this.storyGameRepository.getGame(event.gameId);
-    game.session.currentRound.point = event.point;
+    game.session.currentRound.selectedPoint = event.point;
     game.session.currentRound.name = event.title;
     game.session.rounds.push(game.session.currentRound);
-    game.session.currentRound = new GameRound(game.session.rounds.length + 1);
+    game.session.currentRound = new Round(game.session.rounds.length + 1);
     game.session.users.forEach((user: User) => {
-      user.round = new Round();
+      user.userRound = new UserRound();
     });
     game.updateClients();
   }
@@ -63,9 +63,9 @@ export class StoryEventHandlerService {
     if (!user) {
       throw new Error("User not found");
     }
-    user.round = {
-      point: event.point,
-      voted: true
+    user.userRound = {
+      selectedPoint: event.point,
+      hasVoted: true
     };
     game.updateClients();
   }

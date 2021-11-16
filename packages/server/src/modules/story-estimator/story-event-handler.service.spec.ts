@@ -1,6 +1,6 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import { Game } from "./classes/dto/Game";
-import { GameRound } from "./classes/dto/GameRound";
+import { UserRound } from "./classes/dto/UserRound";
 import { Round } from "./classes/dto/Round";
 import { Session } from "./classes/dto/Session";
 import { User } from "./classes/dto/User";
@@ -122,8 +122,8 @@ describe("StoryEventHandlerService", () => {
       const existingGame = getExistingGame(gameId, client, client2);
       const expectedGame = getExistingGame(gameId, client, client2);
       const user = expectedGame.session.users[1];
-      user.round.voted = true;
-      user.round.point = "point";
+      user.userRound.hasVoted = true;
+      user.userRound.selectedPoint = "point";
       storyGameRepository.getGame = jest.fn().mockReturnValue(existingGame);
 
       // @ts-ignore
@@ -156,12 +156,12 @@ describe("StoryEventHandlerService", () => {
       } as CompleteRoundEvent;
       const existingGame = getExistingGame(gameId, client, client2);
       const expectedGame = getExistingGame(gameId, client, client2);
-      const currentRound = new GameRound(1);
-      currentRound.point = 'point';
+      const currentRound = new Round(1);
+      currentRound.selectedPoint = 'point';
       const user = expectedGame.session.rounds.push(currentRound);
-      expectedGame.session.currentRound = new GameRound(expectedGame.session.rounds.length + 1);
+      expectedGame.session.currentRound = new Round(expectedGame.session.rounds.length + 1);
       expectedGame.session.users.forEach((u) => {
-        u.round = new Round()
+        u.userRound = new UserRound()
       });
       storyGameRepository.getGame = jest.fn().mockReturnValue(existingGame);
 

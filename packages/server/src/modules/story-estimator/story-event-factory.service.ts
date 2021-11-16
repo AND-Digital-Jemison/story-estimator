@@ -11,19 +11,19 @@ import { StoryEventHandlerService } from "./story-event-handler.service";
 @Injectable()
 export class StoryEventFactoryService {
 
-  constructor(private readonly storyEventService: StoryEventHandlerService) {
-  }
+   constructor(private readonly storyEventService: StoryEventHandlerService) {
+   }
 
-  handle(client: WebSocket, event: GameEvent) {
-    console.log("handler", event);
-    if (StoryEvents.create === event.event) {
-       this.storyEventService.create(client, event as NewGameEvent);
-    } else if (StoryEvents.join === event.event) {
-       this.storyEventService.join(client, event as JoinGameEvent);
-    } else if(StoryEvents.point === event.event){
-       this.storyEventService.point(event as PointGameEvent);
-    } else if(StoryEvents.complete === event.event){
-       this.storyEventService.complete(event as CompleteRoundEvent);
-    }
-  }
+   handle(client: WebSocket, event: GameEvent) {
+      console.log("handler", event);
+      if (StoryEvents.create === event.event) {
+         this.storyEventService.create(client, event as NewGameEvent);
+      } else if (StoryEvents.join === event.event) {
+         this.storyEventService.join(client, event as JoinGameEvent);
+      } else if (StoryEvents.point === event.event) {
+         this.storyEventService.point(event as PointGameEvent);
+      } else if (StoryEvents.complete === event.event) {
+         this.storyEventService.complete(event as CompleteRoundEvent);
+      }
+   }
 }
