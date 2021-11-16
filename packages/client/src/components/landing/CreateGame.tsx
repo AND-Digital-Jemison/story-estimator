@@ -1,6 +1,13 @@
 import React, { useState } from 'react';
 import { UserModel } from '~/models/UserModel';
 import useWebSocket from '../hooks/web-socket/useWebSocket';
+import {
+  Button,
+  ButtonContainer,
+  FormContainer,
+  Input,
+  Label,
+} from '../../styling/landing-styles';
 
 export const CreateGame = () => {
   const [user, setUser] = useState<UserModel>();
@@ -11,14 +18,23 @@ export const CreateGame = () => {
   };
 
   return (
-    <form>
-      <label htmlFor="username-input">Name:</label>
-      <input
-        id="username-input"
+    <FormContainer>
+      <Label htmlFor = "story-name">Story Name</Label>
+      <Input
         type="text"
+        id="story-name"
+        name="story-name"
+        onChange={event =>
+          setCreateGameData({
+            ...createGameData,
+            storyName: event.target.value,
+          })
+        }
         onChange={(e) => setUser({ ...user, name: e.target.value })}
       />
-      <button onClick={handleClick}>CREATE</button>
-    </form>
+      <ButtonContainer>
+        <Button create onClick={handleClick}>CREATE GAME</Button>
+      </ButtonContainer>
+    </FormContainer>
   );
 };
