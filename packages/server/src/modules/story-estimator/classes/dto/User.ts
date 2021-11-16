@@ -1,15 +1,15 @@
-import { Round } from "./Round";
+import { UserRound } from "./UserRound";
 
 export class User {
   public id: number;
   public name: string;
 
-  public round: Round;
+  public userRound: UserRound;
 
   constructor(id: number, name: string) {
     this.id = id;
     this.name = name;
-    this.round = new Round();
+    this.userRound = new UserRound();
   }
 }
 
