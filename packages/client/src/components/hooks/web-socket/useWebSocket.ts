@@ -3,7 +3,7 @@ import { Socket } from './types';
 
 const useWebSocket = (): Socket => {
   const [response, setResponse] = useState({});
-  const socketUrl = 'ws://localhost:8000';
+  const socketUrl = 'ws://localhost:8001';
   const socket = useRef(new WebSocket(socketUrl));
 
   const connect = () => {
@@ -25,9 +25,9 @@ const useWebSocket = (): Socket => {
     };
   };
 
-  const send = (data: any) => {
+  const send = (message: any) => {
     try {
-      socket.current.send(JSON.stringify(data));
+      socket.current.send(JSON.stringify(message));
     } catch (error) {
       console.error(error);
     }
