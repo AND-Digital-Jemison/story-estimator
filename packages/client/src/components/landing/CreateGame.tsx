@@ -19,17 +19,11 @@ export const CreateGame = () => {
 
   return (
     <FormContainer>
-      <Label htmlFor = "story-name">Story Name</Label>
+      <Label htmlFor="story-name">Story Name</Label>
       <Input
         type="text"
         id="story-name"
         name="story-name"
-        onChange={event =>
-          setCreateGameData({
-            ...createGameData,
-            storyName: event.target.value,
-          })
-        }
         onChange={(e) => setUser({ ...user, name: e.target.value })}
       />
       <ButtonContainer>
