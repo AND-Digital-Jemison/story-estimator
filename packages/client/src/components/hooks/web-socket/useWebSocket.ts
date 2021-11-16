@@ -1,40 +1,37 @@
-import { useCallback, useState } from 'react';
+import { useRef, useState } from 'react';
 import { Socket } from './types';
 
 const useWebSocket = (): Socket => {
   const [response, setResponse] = useState({});
   const socketUrl = 'ws://localhost:8000';
-  const socket = new WebSocket(socketUrl);
+  const socket = useRef(new WebSocket(socketUrl));
 
-  const connect = useCallback(() => {
-    socket.onopen = () => {
+  const connect = () => {
+    socket.current.onopen = () => {
       console.log('Connected');
 
-      socket.onerror = (error: any) => {
+      socket.current.onerror = (error: any) => {
         console.error(error);
       };
 
-      socket.onmessage = (event: any) => {
+      socket.current.onmessage = (event: any) => {
         console.log('Data: ', event.data);
         setResponse(JSON.parse(event.data));
       };
 
-      socket.onclose = () => {
+      socket.current.onclose = () => {
         console.log('Disconnected');
       };
     };
-  }, [socketUrl]);
+  };
 
-  const send = useCallback(
-    (data: any) => {
-      try {
-        socket.send(JSON.stringify(data));
-      } catch (error) {
-        console.error(error);
-      }
-    },
-    [socketUrl]
-  );
+  const send = (data: any) => {
+    try {
+      socket.current.send(JSON.stringify(data));
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return { connect, send, response };
 };

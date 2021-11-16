@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Socket } from '../hooks/web-socket/types';
+import React, { useState } from 'react';
+import { UserModel } from '~/models/UserModel';
 import useWebSocket from '../hooks/web-socket/useWebSocket';
 import {
   Button,
@@ -10,29 +10,21 @@ import {
 } from '../../styling/landing-styles';
 
 export const CreateGame = () => {
-  const [createGameData, setCreateGameData] = useState({
-    name: '',
-    storyName: '',
-  });
+  const [user, setUser] = useState<UserModel>();
   const socket = useWebSocket();
 
   const handleClick = () => {
-    socket.send(createGameData);
+    socket.send(user);
   };
 
   return (
     <FormContainer>
-      <Label htmlFor = "story-name">Story Name</Label>
+      <Label htmlFor="story-name">Story Name</Label>
       <Input
         type="text"
         id="story-name"
         name="story-name"
-        onChange={event =>
-          setCreateGameData({
-            ...createGameData,
-            storyName: event.target.value,
-          })
-        }
+        onChange={(e) => setUser({ ...user, name: e.target.value })}
       />
       <ButtonContainer>
         <Button create onClick={handleClick}>CREATE GAME</Button>
