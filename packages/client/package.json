@@ -4,42 +4,73 @@
   "description": "Client boilerplate built with Vite, using React, communicating with a Nest server",
   "main": "src/index.tsx",
   "author": "And Digital",
-  "license": "",
+  "license": "UNLICENSED",
   "scripts": {
     "start:dev": "vite",
     "generate:version": "cd ../.. && yarn generate:version",
     "build": "vite build",
     "serve": "vite preview",
     "lint": "eslint --fix --ext .ts,.tsx,.js,.jsx src",
-    "check-types": "tsc"
+    "check-types": "tsc",
+    "test": "jest --env=jsdom"
   },
   "dependencies": {
     "@nest-react/domain": "^1.0.0",
     "@nest-react/lib": "^1.0.0",
+    "@testing-library/jest-dom": "^5.15.0",
+    "@testing-library/react-hooks": "^7.0.2",
+    "@types/jest": "^27.0.2",
+    "@types/node": "^16.11.6",
+    "axios": "^0.24.0",
     "debug": "^4.3.1",
+    "history": "5",
+    "jest": "^27.3.1",
+    "jest-canvas-mock": "^2.3.1",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
-    "semver": "^7.3.4"
+    "react-router-dom": "^5.3.0",
+    "semver": "^7.3.4",
+    "styled-components": "^5.3.3",
+    "ts-jest": "^27.0.7"
   },
   "peerDependencies": {
     "@and-digital/story-estimator-server": "1.0.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.16.0",
+    "@babel/preset-env": "^7.16.0",
+    "@babel/preset-typescript": "^7.16.0",
+    "@testing-library/dom": "^8.10.1",
+    "@testing-library/react": "^12.1.2",
+    "@testing-library/react-hooks": "^7.0.2",
     "@types/debug": "^4.1.5",
+    "@types/jest": "^27.0.2",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
+    "@types/react-router": "^5.1.17",
+    "@types/react-router-dom": "^5.3.2",
     "@types/semver": "^7.3.4",
     "@typescript-eslint/eslint-plugin": "^4.17.0",
     "@typescript-eslint/parser": "^4.17.0",
     "@vitejs/plugin-react-refresh": "^1.3.1",
+    "babel-jest": "^27.3.1",
     "eslint": "^7.22.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "jest": "^27.3.1",
+    "jest-websocket-mock": "^2.2.1",
+    "mock-socket": "^9.0.7",
     "prettier": "^2.2.1",
+    "react-router-dom": "^5.3.0",
     "typescript": "^4.1.2",
     "vite": "^2.0.5"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.(ts|tsx|js|jsx)$": "ts-jest"
+    }
   }
 }
