@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Body = styled.body`
+export const Body = styled.div`
   @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap');
   background-color: #2897ff;
   margin: auto;
