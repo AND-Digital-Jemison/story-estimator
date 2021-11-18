@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { Socket } from './types';
+import { Message, Socket } from './types';
 
 const useWebSocket = (): Socket => {
   const [response, setResponse] = useState({});
@@ -25,7 +25,7 @@ const useWebSocket = (): Socket => {
     };
   };
 
-  const send = (message: any) => {
+  const send = (message: Message) => {
     try {
       socket.current.send(JSON.stringify(message));
     } catch (error) {
