@@ -1,23 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import { UserModel } from '~/models/UserModel';
-import useWebSocket from '../hooks/web-socket/useWebSocket';
+import React, { useState } from 'react';
+import useWebSocket from '../../hooks/web-socket/useWebSocket';
 import {
-  Button,
+  CreateButton,
   ButtonContainer,
   FormContainer,
   Input,
   Label,
-} from '../../styling/landing-styles';
-import { Message } from '../hooks/web-socket/types';
-import { CreateData } from './types';
-import { LandingEvent } from './EventConstants';
+} from '../landing-styles';
+import { Message } from '../../hooks/web-socket/types';
+import { CreateData } from '../types';
+import { LandingEvent } from '../event-constants';
 
 export const CreateGame = (props: { name: string }) => {
   const { name } = props;
   const [story, setStory] = useState('');
   const socket = useWebSocket();
-
-  useEffect(() => { }, [name])
 
   const handleClick = () => {
     const data: CreateData = {
@@ -36,15 +33,15 @@ export const CreateGame = (props: { name: string }) => {
 
   return (
     <FormContainer>
-      <Label htmlFor="story-name">Story Name</Label>
+      <Label htmlFor="story-title">Story Title</Label>
       <Input
         type="text"
-        id="story-name"
-        name="story-name"
+        id="story-title"
+        name="story-title"
         onChange={(e: any) => setStory(e.target.value)}
       />
       <ButtonContainer>
-        <Button create onClick={handleClick}>CREATE GAME</Button>
+        <CreateButton create onClick={handleClick}>CREATE GAME</CreateButton>
       </ButtonContainer>
     </FormContainer>
   );

@@ -1,4 +1,4 @@
-import { LandingEvent } from "./EventConstants";
+import { LandingEvent } from "./event-constants";
 
 export interface CreateData {
     name: string;
