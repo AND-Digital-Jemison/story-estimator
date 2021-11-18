@@ -19,8 +19,7 @@ describe('StoryEventFactoryService', () => {
     }).compile();
 
     service = module.get<StoryEventFactoryService>(StoryEventFactoryService);
-    storyEventService = await module.get<StoryEventHandlerService>(StoryEventHandlerService);
-
+    storyEventService = module.get<StoryEventHandlerService>(StoryEventHandlerService);
   });
 
   it('should be defined', () => {
@@ -32,7 +31,7 @@ describe('StoryEventFactoryService', () => {
     it("should call create", () => {
       storyEventService.create = jest.fn();
       const client = {} as WebSocket;
-      const event = {event: StoryEvents.create} as GameEvent;
+      const event = { event: StoryEvents.create } as GameEvent;
 
       service.handle(client, event);
 
@@ -42,31 +41,31 @@ describe('StoryEventFactoryService', () => {
     it("should call join", () => {
       storyEventService.join = jest.fn();
       const client = {} as WebSocket;
-      const event = {event: StoryEvents.join} as GameEvent;
+      const event = { event: StoryEvents.join } as GameEvent;
 
       service.handle(client, event);
 
       expect(storyEventService.join).toHaveBeenCalledWith(client, event);
     });
 
-       it("should call point", () => {
+    it("should call point", () => {
       storyEventService.point = jest.fn();
       const client = {} as WebSocket;
-      const event = {event: StoryEvents.point} as GameEvent;
+      const event = { event: StoryEvents.point } as GameEvent;
 
       service.handle(client, event);
 
       expect(storyEventService.point).toHaveBeenCalledWith(event);
     });
 
-       it("should call complete", () => {
+    it("should call complete", () => {
       storyEventService.complete = jest.fn();
       const client = {} as WebSocket;
-      const event = {event: StoryEvents.complete} as GameEvent;
+      const event = { event: StoryEvents.complete } as GameEvent;
 
       service.handle(client, event);
 
-      expect(storyEventService.complete).toHaveBeenCalledWith( event);
+      expect(storyEventService.complete).toHaveBeenCalledWith(event);
     });
 
 

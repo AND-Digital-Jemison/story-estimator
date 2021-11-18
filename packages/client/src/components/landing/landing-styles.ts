@@ -46,7 +46,7 @@ export const Label = styled.label`
 `;
 
 export const Input = styled.input`
-  width: ${props => (props.roomcode ? '275px' : '441px')};
+  width: ${props => (props.roomcode ? '260px' : '441px')};
   height: 77px;
   font-size: 24px;
   font-weight: 600;
@@ -64,8 +64,8 @@ export const PathContainer = styled.div`
 `;
 
 export const Button = styled.button`
-  width: ${props => (props.create ? '233px' : '139px')};
-  height: 76px;
+  width: 200px;
+  height: 83px;
   border-radius: 5px;
   background: #2897FF;
   color: #fff;
@@ -75,6 +75,15 @@ export const Button = styled.button`
   border: none;
   cursor: pointer;
   box-shadow: 5px 5px 8px #888888;
+`;
+
+export const JoinButton = styled(Button)`
+  width: 150px;
+  margin-left: 30px;
+`;
+
+export const CreateButton = styled(Button)`
+  width: 233px;
 `;
 
 export const ButtonContainer = styled.div`

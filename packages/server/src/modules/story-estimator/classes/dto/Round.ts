@@ -1,9 +1,14 @@
-export class Round {
-  point?: string;
-  voted: boolean;
+import { UserRound } from "./UserRound";
 
-  constructor() {
-    this.voted = false;
+export class Round extends UserRound {
+  id: number;
+  name?: string;
+  time?: string;
+  note?: string;
+
+  constructor(id: number) {
+    super();
+    this.id = id;
   }
 }
 

@@ -6,7 +6,12 @@ import useWebSocket from './useWebSocket';
 
 describe('When sending data to a socket', () => {
   it('should be sent successfully', async () => {
-    const mockData = { test: '123' };
+    const mockData = {
+      event: 'story-event-listener',
+      data: {
+        test: '123'
+      }
+    };
 
     const { result } = renderHook(() => useWebSocket());
     await mockSocketServer.connected;

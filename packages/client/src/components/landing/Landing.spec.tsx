@@ -6,10 +6,10 @@ describe('Landing page', () => {
   it('should render the page fields', () => {
     render(<Landing />);
 
-    const nameLabel = screen.getByText('Name:');
-    const roomCodeLabel = screen.getByText('Got a room code?');
-    const createButton = screen.getByText('CREATE');
+    const nameLabel = screen.getByText('Name');
+    const roomCodeLabel = screen.getByText('Room Code');
     const joinButton = screen.getByText('JOIN');
+    const createButton = screen.getByText('CREATE GAME');
 
     expect(nameLabel).toBeTruthy();
     expect(roomCodeLabel).toBeTruthy();

@@ -1,7 +1,7 @@
 import { CompleteRoundEvent } from "../classes/events/complete-round-event";
 import { JoinGameEvent } from "../classes/events/join-game-event";
 import { NewGameEvent } from "../classes/events/new-game-event";
-import {  PointGameEvent } from "../classes/events/point-game-event";
+import { PointGameEvent } from "../classes/events/point-game-event";
 import { Session } from "../classes/dto/Session";
 
 export interface GameEvents {

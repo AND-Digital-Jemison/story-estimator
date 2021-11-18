@@ -8,6 +8,7 @@ export class Game {
   session: Session;
   lastInteractionTime: Date;
   clients: WebSocket[] = [];
+  expectedGame: any;
 
   constructor(session: Session, client: WebSocket) {
     this.session = session;
