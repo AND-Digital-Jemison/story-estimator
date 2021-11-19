@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { Landing } from './Landing';
 
 describe('Landing page', () => {
@@ -16,4 +16,24 @@ describe('Landing page', () => {
     expect(createButton).toBeTruthy();
     expect(joinButton).toBeTruthy();
   });
+
+  it('should validate the name field when the CREATE GAME button is clicked', () => {
+    render(<Landing />);
+
+    const createButton = screen.getByText('CREATE GAME');
+
+    fireEvent.click(createButton);
+
+    expect(screen.getByText('Please enter a name')).toBeTruthy();
+  })
+
+  it('should validate the name field when the JOIN button is clicked', () => {
+    render(<Landing />);
+
+    const joinButton = screen.getByText('JOIN');
+
+    fireEvent.click(joinButton);
+
+    expect(screen.getByText('Please enter a name')).toBeTruthy();
+  })
 });

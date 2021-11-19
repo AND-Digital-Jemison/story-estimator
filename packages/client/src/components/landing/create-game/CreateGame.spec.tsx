@@ -16,7 +16,7 @@ describe('When clicking the CREATE button', () => {
       }
     };
 
-    render(<CreateGame name={'testName'} />);
+    render(<CreateGame name={'testName'} validateNameCallback={jest.fn()} />);
 
     await mockSocketServer.connected;
 
@@ -30,6 +30,4 @@ describe('When clicking the CREATE button', () => {
   });
 
   it("should route to a new game when the user's name is entered and the create button is clicked", () => { });
-
-  it('should show an error if the user attempts to create a game without typing their name', () => { });
 });

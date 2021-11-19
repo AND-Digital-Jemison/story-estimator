@@ -14,7 +14,6 @@ export const Main = styled.div`
   background-color: #fff;
   padding: 10px 10px ;
   width: 698px;
-  height: 772px;
   border-radius: 43px;
   text-align: center;
   margin: auto;
@@ -37,12 +36,20 @@ export const FormContainer = styled.form`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  padding-bottom: 15px;
 `;
 
 export const Label = styled.label`
   font-size: 24px;
   font-weight: 500;
   margin-bottom: 5px;
+`;
+
+export const ValidationLabel = styled.label`
+  padding-left: 10px;
+  font-size: 18px;
+  font-weight: 400;
+  color: #FF323C;
 `;
 
 export const Input = styled.input`
@@ -54,7 +61,7 @@ export const Input = styled.input`
   border-radius: 10px;
   border: 2px solid #2897FF;
   padding-left: 10px;
-  margin-bottom: 15px;
+  margin-bottom: 5px;
 `;
 
 export const PathContainer = styled.div`
@@ -89,4 +96,5 @@ export const CreateButton = styled(Button)`
 export const ButtonContainer = styled.div`
   width: 100%;
   margin-top: 15px;
+  margin-bottom: 20px;
 `;
