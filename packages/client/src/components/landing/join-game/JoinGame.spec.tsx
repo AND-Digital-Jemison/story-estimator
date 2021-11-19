@@ -6,7 +6,7 @@ import { LandingEvent } from '../event-constants';
 import { JoinGame } from './JoinGame';
 
 describe('When joining a game', () => {
-  it("should send the user's information to the server", async () => {
+  it('should send the user\'s information to the server', async () => {
     const mockJoinData: Message = {
       event: 'story-event-listener',
       data: {
@@ -16,7 +16,7 @@ describe('When joining a game', () => {
       }
     };
 
-    render(<JoinGame name={'testName'} />);
+    render(<JoinGame name={'testName'} validateNameCallback={jest.fn()} />);
 
     await mockSocketServer.connected;
 
@@ -29,13 +29,17 @@ describe('When joining a game', () => {
     await expect(mockSocketServer).toReceiveMessage(JSON.stringify(mockJoinData));
   });
 
-  it("should route to a new game when the user's name is entered and the create button is clicked", () => { });
+  it('should show an error if the user attempts to join a game without using a room code', async () => {
+    render(<JoinGame name={'testName'} validateNameCallback={jest.fn()} />);
 
-  it('should show an error if the user attempts to create a game without typing their name', () => { });
+    const joinBtn = screen.getByText('JOIN');
 
-  it('should show an error if the user attempts to join a game without using a room code', () => { });
+    fireEvent.click(joinBtn);
 
-  it('should show an error if the user attempts to join a game an invalid room code', () => { });
+    expect(screen.getByText('Please enter a valid room code')).toBeTruthy();
+  });
+
+  it('should show an error if the user attempts to join a game with an invalid room code', () => { });
 
   it('should route to a game if the user adds their name and a valid code and clicks Join', () => { });
 });

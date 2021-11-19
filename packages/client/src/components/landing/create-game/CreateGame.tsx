@@ -11,25 +11,37 @@ import { Message } from '../../hooks/web-socket/types';
 import { CreateData } from '../types';
 import { LandingEvent } from '../event-constants';
 
-export const CreateGame = (props: { name: string }) => {
-  const { name } = props;
+export const CreateGame = (props: { name: string, validateNameCallback: (nameValid: boolean) => void }) => {
+  const { name, validateNameCallback } = props;
   const [story, setStory] = useState('');
   const socket = useWebSocket();
 
-  const handleClick = () => {
+  const handleClick = (e: any) => {
+    e.preventDefault();
     const data: CreateData = {
       name: name,
       story: story,
       event: LandingEvent.CREATE
     }
 
-    const message: Message = {
-      event: "story-event-listener",
-      data: data
+    if (inputValid(data)) {
+      const message: Message = {
+        event: "story-event-listener",
+        data: data
+      }
+
+      socket.send(message);
+    }
+  };
+
+  const inputValid = (data: CreateData): boolean => {
+    if (data.name.length === 0) {
+      validateNameCallback(false);
+      return false;
     }
 
-    socket.send(message);
-  };
+    return true;
+  }
 
   return (
     <FormContainer>
@@ -41,7 +53,7 @@ export const CreateGame = (props: { name: string }) => {
         onChange={(e: any) => setStory(e.target.value)}
       />
       <ButtonContainer>
-        <CreateButton create onClick={handleClick}>CREATE GAME</CreateButton>
+        <CreateButton onClick={(e: any) => handleClick(e)}>CREATE GAME</CreateButton>
       </ButtonContainer>
     </FormContainer>
   );

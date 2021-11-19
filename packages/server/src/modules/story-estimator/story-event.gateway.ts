@@ -43,9 +43,6 @@ export class StoryEventGateway implements OnGatewayConnection, OnGatewayDisconne
 
   @SubscribeMessage("story-event-listener")
   onEvent(client: WebSocket, data: any): void {
-    console.log(`Client: ${client}`);
-    console.log(`Data: ${data}`);
-
     this.eventFactory.handle(client, data);
   }
 
