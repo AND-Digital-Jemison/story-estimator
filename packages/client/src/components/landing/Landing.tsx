@@ -32,7 +32,7 @@ export const Landing = () => {
               id="user-name"
               name="user-name"
               value={name}
-              maxLength={15}
+              maxLength={30}
               onChange={e => setName(e.currentTarget.value)
               }
             />
