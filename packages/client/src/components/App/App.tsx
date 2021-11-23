@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import { Landing } from '../landing/Landing';
-
+import { Game } from '../game/Game';
 import { API_URL } from '~/config';
 import { Logger, checkServerVersion } from '~/utils';
 
@@ -30,6 +30,7 @@ export const App: FC<unknown> = () => {
     <Router>
       <Switch>
         <Route path="/" exact={true} render={() => <Landing />}></Route>
+        <Route path="/game" exact={true} render={() => <Game />}></Route>
       </Switch>
     </Router>
   );
