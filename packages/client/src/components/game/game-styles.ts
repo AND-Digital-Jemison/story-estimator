@@ -1,8 +1,12 @@
 import styled from 'styled-components';
 
-export const GameContainer = styled.div`
+export const RoomContainer = styled.div`
   @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap');
   font-family: 'Poppins', sans-serif;
+`;
+
+export const GameContainer = styled.div`
+  
 `;
 
 export const RoomCode = styled.p`

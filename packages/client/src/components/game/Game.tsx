@@ -1,5 +1,5 @@
 import React from 'react';
-import { GameContainer, RoomCode, Title } from './game-styles';
+import { RoomContainer, RoomCode, Title, GameContainer } from './game-styles';
 import { Story } from './Story';
 import { Card } from './Card';
 
@@ -12,15 +12,15 @@ export const Game = () => {
     { id: 4, name: 'dale', selected: false },
   ];
   return (
-    <GameContainer>
+    <RoomContainer>
       <RoomCode>Room Code: 4a5b</RoomCode>
-      <div>
+      <GameContainer>
         <Title>Planning Poker</Title>
         <Story />
-        {users.map(user => (
-          <Card key={user.id} user={user} />
-        ))}
-      </div>
-    </GameContainer>
+          {users.map(user => (
+            <Card key={user.id} user={user} />
+          ))}
+      </GameContainer>
+    </RoomContainer>
   );
 };
