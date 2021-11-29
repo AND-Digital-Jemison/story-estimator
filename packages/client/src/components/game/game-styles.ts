@@ -41,14 +41,15 @@ export const PointBox = styled.div`
   text-align: center;
   line-height: 44px;
   border-radius: 10px;
-  display: table-cell;
-  vertical-align: middle;
 `;
 
 export const CardBox = styled(PointBox)`
   height: 162px;
   width: 77px;
   font-size: 36px;
+  line-height: 144px;
 `;
 
-export const CardContainer = styled.div``;
+export const CardContainer = styled.div`
+  display: flex;
+`;
