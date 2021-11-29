@@ -6,7 +6,9 @@ export const RoomContainer = styled.div`
 `;
 
 export const GameContainer = styled.div`
-  
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 `;
 
 export const RoomCode = styled.p`
@@ -48,3 +50,5 @@ export const CardBox = styled(PointBox)`
   width: 77px;
   font-size: 36px;
 `;
+
+export const CardContainer = styled.div``;

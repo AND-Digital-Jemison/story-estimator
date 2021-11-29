@@ -1,5 +1,11 @@
 import React from 'react';
-import { RoomContainer, RoomCode, Title, GameContainer } from './game-styles';
+import {
+  CardContainer,
+  GameContainer,
+  RoomCode,
+  RoomContainer,
+  Title,
+} from './game-styles';
 import { Story } from './Story';
 import { Card } from './Card';
 
@@ -17,9 +23,11 @@ export const Game = () => {
       <GameContainer>
         <Title>Planning Poker</Title>
         <Story />
+        <CardContainer>
           {users.map(user => (
             <Card key={user.id} user={user} />
           ))}
+        </CardContainer>
       </GameContainer>
     </RoomContainer>
   );
