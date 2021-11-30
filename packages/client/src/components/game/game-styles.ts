@@ -70,6 +70,7 @@ export const PointBox = styled(CardBox)`
   &:nth-child(4n + 4) {
     border: 5px solid #5ac328;
   }
+  cursor: pointer;
 `;
 
 export const CardContainer = styled.div`

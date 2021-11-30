@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-key */
-import React from 'react';
+import React, { useState } from 'react';
 import {
   CardContainer,
   GameButton,
@@ -13,18 +13,20 @@ import {
 
 import { Story } from './Story';
 import { Card } from './Card';
-import { Points } from './Points'
+import { Points } from './Points';
 
 export const Game = () => {
-  // const [users, setUsers] = useState([]);
-  const users = [
-    { id: 1, name: 'Shuyan', selected: false },
-    { id: 2, name: 'Nimra', selected: false },
-    { id: 3, name: 'Jack', selected: false },
-    { id: 4, name: 'Dale', selected: false },
+  const userData = [
+    { id: 1, name: 'Shuyan', selected: false, point: null },
+    { id: 2, name: 'Nimra', selected: false, point: null },
+    { id: 3, name: 'Jack', selected: false, point: null },
+    { id: 4, name: 'Dale', selected: false, point: null },
   ];
 
+  const [users, setUsers] = useState(userData);
+
   const fiboNums = [0, 1, 2, 3, 5, 8, 13, 21, 34, 55];
+
 
   return (
     <RoomContainer>
