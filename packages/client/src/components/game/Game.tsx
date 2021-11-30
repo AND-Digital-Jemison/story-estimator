@@ -2,10 +2,12 @@ import React from 'react';
 import {
   CardContainer,
   GameContainer,
+  RevealButton,
   RoomCode,
   RoomContainer,
   Title,
 } from './game-styles';
+
 import { Story } from './Story';
 import { Card } from './Card';
 
@@ -28,6 +30,7 @@ export const Game = () => {
             <Card key={user.id} user={user} />
           ))}
         </CardContainer>
+        <RevealButton>Reveal</RevealButton>
       </GameContainer>
     </RoomContainer>
   );

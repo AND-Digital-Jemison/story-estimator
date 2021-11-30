@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Button } from '~/components/landing/landing-styles';
 
 export const RoomContainer = styled.div`
   @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap');
@@ -52,4 +53,19 @@ export const CardBox = styled(PointBox)`
 
 export const CardContainer = styled.div`
   display: flex;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+`;
+
+export const RevealButton = styled(Button)`
+  background: #ff323c;
+  width: 150px;
+  height: 70px;
+  margin-top: 55px;
+  margin-bottom: 20px;
+`;
+
+export const caption = styled.div`
+  display: block;
 `;

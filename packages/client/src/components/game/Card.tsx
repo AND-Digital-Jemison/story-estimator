@@ -1,6 +1,11 @@
 import React from 'react';
 import { CardBox } from './game-styles';
 
-export const Card = props => {
-  return <CardBox>?</CardBox>;
+export const Card = () => {
+  return (
+    <>
+      <CardBox>?</CardBox>
+      <caption>hkjqnkjn</caption>
+    </>
+  );
 };
