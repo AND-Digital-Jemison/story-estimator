@@ -1,8 +1,10 @@
+/* eslint-disable react/jsx-key */
 import React from 'react';
 import {
   CardContainer,
+  GameButton,
   GameContainer,
-  RevealButton,
+  PlayerCards,
   RoomCode,
   RoomContainer,
   Title,
@@ -10,15 +12,19 @@ import {
 
 import { Story } from './Story';
 import { Card } from './Card';
+import { Points } from './Points'
 
 export const Game = () => {
   // const [users, setUsers] = useState([]);
   const users = [
-    { id: 1, name: 'shuyan', selected: false },
-    { id: 2, name: 'nimra', selected: false },
-    { id: 3, name: 'jack', selected: false },
-    { id: 4, name: 'dale', selected: false },
+    { id: 1, name: 'Shuyan', selected: false },
+    { id: 2, name: 'Nimra', selected: false },
+    { id: 3, name: 'Jack', selected: false },
+    { id: 4, name: 'Dale', selected: false },
   ];
+
+  const fiboNums = [0, 1, 2, 3, 5, 8, 13, 21, 34, 55];
+
   return (
     <RoomContainer>
       <RoomCode>Room Code: 4a5b</RoomCode>
@@ -27,10 +33,18 @@ export const Game = () => {
         <Story />
         <CardContainer>
           {users.map(user => (
-            <Card key={user.id} user={user} />
+            <PlayerCards key={user.id + user.name}>
+              <Card key={user.id} />
+              <p key={user.name}>{user.name}</p>
+            </PlayerCards>
           ))}
         </CardContainer>
-        <RevealButton>Reveal</RevealButton>
+        <GameButton>Reveal</GameButton>
+        <CardContainer>
+          {fiboNums.map(num => (
+            <Points key={'fibo' + num} num={num} />
+          ))}
+        </CardContainer>
       </GameContainer>
     </RoomContainer>
   );

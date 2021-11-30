@@ -58,14 +58,16 @@ export const CardContainer = styled.div`
   justify-content: center;
 `;
 
-export const RevealButton = styled(Button)`
-  background: #ff323c;
-  width: 150px;
-  height: 70px;
-  margin-top: 55px;
-  margin-bottom: 20px;
+export const PlayerCards = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
-export const caption = styled.div`
-  display: block;
+export const GameButton = styled(Button)`
+  background: #ff323c;
+  width: 139px;
+  height: 76px;
+  margin-top: 55px;
+  margin-bottom: 50px;
 `;
