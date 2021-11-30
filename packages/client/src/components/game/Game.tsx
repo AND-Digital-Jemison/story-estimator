@@ -4,6 +4,7 @@ import {
   CardContainer,
   GameButton,
   GameContainer,
+  Name,
   PlayerCards,
   RoomCode,
   RoomContainer,
@@ -35,7 +36,7 @@ export const Game = () => {
           {users.map(user => (
             <PlayerCards key={user.id + user.name}>
               <Card key={user.id} />
-              <p key={user.name}>{user.name}</p>
+              <Name key={user.name}>{user.name}</Name>
             </PlayerCards>
           ))}
         </CardContainer>

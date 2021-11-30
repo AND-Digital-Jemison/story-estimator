@@ -1,6 +1,6 @@
 import React from 'react';
-import { CardBox } from './game-styles';
+import { PointBox } from './game-styles';
 
 export const Points = ({num}) => {
-  return <CardBox>{num}</CardBox>;
+  return <PointBox>{num}</PointBox>;
 };
