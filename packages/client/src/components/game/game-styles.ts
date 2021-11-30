@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Button } from '~/components/landing/landing-styles';
 
 export const RoomContainer = styled.div`
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Roboto:wght@300&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Roboto:wght@300&display=swap');
   font-family: 'Poppins', sans-serif;
 `;
 
@@ -13,8 +13,11 @@ export const GameContainer = styled.div`
 `;
 
 export const RoomCode = styled.p`
+  font-family: 'Roboto', sans-serif;
   text-align: right;
-  margin: 50px;
+  margin: 50px 50px 10px 10px;
+  font-size: 24px;
+  font-weight: 100;
 `;
 
 export const Title = styled.h1`
@@ -36,7 +39,7 @@ export const StoryContainer = styled.div`
 
 export const ResultBox = styled.div`
   margin: 20px;
-  border: 5px solid #2897ff;
+  border: 3px solid #2897ff;
   width: 44px;
   height: 44px;
   text-align: center;
@@ -48,10 +51,13 @@ export const CardBox = styled(ResultBox)`
   height: 120px;
   width: 77px;
   font-size: 36px;
+  margin: 20px 40px;
   line-height: 120px;
+  border: 5px solid #2897ff;
 `;
 
 export const PointBox = styled(CardBox)`
+  margin: 10px 20px;
   &:nth-child(4n + 1) {
     border: 5px solid #ff323c;
   }
@@ -89,5 +95,5 @@ export const GameButton = styled(Button)`
   width: 139px;
   height: 76px;
   margin-top: 55px;
-  margin-bottom: 50px;
+  margin-bottom: 100px;
 `;
