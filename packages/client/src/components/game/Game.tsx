@@ -17,10 +17,10 @@ import { Points } from './Points';
 
 export const Game = () => {
   const userData = [
-    { id: 1, name: 'Shuyan', selected: false, point: null },
-    { id: 2, name: 'Nimra', selected: false, point: null },
-    { id: 3, name: 'Jack', selected: false, point: null },
-    { id: 4, name: 'Dale', selected: false, point: null },
+    { id: 1, name: 'Dale', selected: true, point: null },
+    { id: 2, name: 'Jack', selected: false, point: null },
+    { id: 3, name: 'Nimra', selected: true, point: null },
+    { id: 4, name: 'Shuyan', selected: false, point: null },
   ];
 
   const [users, setUsers] = useState(userData);
@@ -37,7 +37,7 @@ export const Game = () => {
         <CardContainer>
           {users.map(user => (
             <PlayerCards key={user.id + user.name}>
-              <Card key={user.id} />
+              <Card key={user.id} user={user} />
               <Name key={user.name}>{user.name}</Name>
             </PlayerCards>
           ))}
