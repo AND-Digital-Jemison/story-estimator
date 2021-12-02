@@ -7,12 +7,12 @@ export const Body = styled.div`
   height: 1000px;
   padding: 100px;
   font-family: 'Poppins', sans-serif;
-  color: #2897FF;
+  color: #2897ff;
 `;
 
 export const Main = styled.div`
   background-color: #fff;
-  padding: 10px 10px ;
+  padding: 10px 10px;
   width: 698px;
   border-radius: 43px;
   text-align: center;
@@ -49,7 +49,7 @@ export const ValidationLabel = styled.label`
   padding-left: 10px;
   font-size: 18px;
   font-weight: 400;
-  color: #FF323C;
+  color: #ff323c;
 `;
 
 export const Input = styled.input`
@@ -57,9 +57,9 @@ export const Input = styled.input`
   height: 77px;
   font-size: 24px;
   font-weight: 600;
-  color: #2897FF;
+  color: #2897ff;
   border-radius: 10px;
-  border: 2px solid #2897FF;
+  border: 2px solid #2897ff;
   padding-left: 10px;
   margin-bottom: 5px;
 `;
@@ -74,7 +74,7 @@ export const Button = styled.button`
   width: 200px;
   height: 83px;
   border-radius: 5px;
-  background: #2897FF;
+  background: #2897ff;
   color: #fff;
   font-family: 'Poppins', sans-serif;
   font-weight: 600;
