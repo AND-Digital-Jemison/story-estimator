@@ -1,20 +1,14 @@
-import React, { useState } from 'react';
-import useWebSocket from '../../hooks/web-socket/useWebSocket';
-import {
-  CreateButton,
-  ButtonContainer,
-  FormContainer,
-  Input,
-  Label,
-} from '../landing-styles';
-import { Message } from '../../hooks/web-socket/types';
-import { CreateData } from '../types';
-import { LandingEvent } from '../event-constants';
+import React, { useState } from "react";
+import { useHistory } from "react-router";
+import { Message } from "../../hooks/web-socket/types";
+import { LandingEvent } from "../event-constants";
+import { ButtonContainer, CreateButton, FormContainer, Input, Label } from "../landing-styles";
+import { CreateData } from "../types";
 
 export const CreateGame = (props: { name: string, validateNameCallback: (nameValid: boolean) => void }) => {
   const { name, validateNameCallback } = props;
-  const [story, setStory] = useState('');
-  const socket = useWebSocket();
+  const [story, setStory] = useState("");
+  const history = useHistory();
 
   const handleClick = (e: any) => {
     e.preventDefault();
@@ -22,15 +16,17 @@ export const CreateGame = (props: { name: string, validateNameCallback: (nameVal
       name: name,
       story: story,
       event: LandingEvent.CREATE
-    }
+    };
 
     if (inputValid(data)) {
       const message: Message = {
         event: "story-event-listener",
         data: data
-      }
+      };
 
-      socket.send(message);
+      console.log("create", message);
+
+      history.push('/game', message);
     }
   };
 
@@ -41,7 +37,7 @@ export const CreateGame = (props: { name: string, validateNameCallback: (nameVal
     }
 
     return true;
-  }
+  };
 
   return (
     <FormContainer>

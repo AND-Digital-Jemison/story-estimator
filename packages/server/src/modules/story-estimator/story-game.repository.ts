@@ -6,6 +6,7 @@ export class StoryGameRepository {
   private games: Game[] = [];
 
   public getGame(id: string) {
+    console.log('find game', id);
     for (const game of this.games) {
       if (game.session.id === id) {
         return game;
@@ -16,5 +17,6 @@ export class StoryGameRepository {
 
   public addGame(game: Game) {
     this.games.push(game);
+    console.log('All games', this.games);
   }
 }

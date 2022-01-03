@@ -2,11 +2,11 @@ import { StoryEvents } from "../../constants/story-events";
 
 export class JoinGameEvent {
   event = StoryEvents.join;
-  userName: string;
+  name: string;
   gameId: string;
 
   constructor(name: string, gameId: string) {
-    this.userName = name;
+    this.name = name;
     this.gameId = gameId;
   }
 }

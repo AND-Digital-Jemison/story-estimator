@@ -5,6 +5,7 @@ const useWebSocket = (): Socket => {
   const [response, setResponse] = useState({});
   const socketUrl = 'ws://localhost:8001';
   const socket = useRef(new WebSocket(socketUrl));
+  console.log('new socket');
 
   const connect = () => {
     socket.current.onopen = () => {

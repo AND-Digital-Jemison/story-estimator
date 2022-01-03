@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { CreateGame } from './create-game/CreateGame';
-import { JoinGame } from './join-game/JoinGame';
+import React, { useState } from "react";
+import { CreateGame } from "./create-game/CreateGame";
+import { JoinGame } from "./join-game/JoinGame";
 import {
   Body,
   Container,
@@ -10,15 +10,17 @@ import {
   Input,
   Label,
   ValidationLabel
-} from './landing-styles';
+} from "./landing-styles";
 
 export const Landing = () => {
-  const [name, setName] = useState('');
+  const [name, setName] = useState("");
   const [nameValid, setNameValid] = useState(true);
+
 
   const validateName = (nameValid: boolean) => {
     setNameValid(nameValid);
-  }
+  };
+
 
   return (
     <Body>
@@ -37,7 +39,7 @@ export const Landing = () => {
               }
             />
             {!nameValid &&
-              <ValidationLabel>Please enter a name</ValidationLabel>
+            <ValidationLabel>Please enter a name</ValidationLabel>
             }
           </FormContainer>
           <JoinGame name={name} validateNameCallback={validateName} />

@@ -48,7 +48,7 @@ export class StoryEventHandlerService {
 
   join(client: WebSocket, event: JoinGameEvent) {
     const game = this.storyGameRepository.getGame(event.gameId);
-    const user = new User(game.session.users.length + 1, event.userName);
+    const user = new User(game.session.users.length + 1, event.name);
     game.session.users.push(user);
     game.clients.push(client);
 

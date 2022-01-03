@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
+import { useHistory } from "react-router";
 import { Message } from '../../hooks/web-socket/types';
-import useWebSocket from '../../hooks/web-socket/useWebSocket';
 import {
   FormContainer,
   Input,
@@ -16,14 +16,14 @@ export const JoinGame = (props: { name: string, validateNameCallback: (nameValid
   const { name, validateNameCallback } = props;
   const [roomCode, setRoomCode] = useState('');
   const [roomCodeValid, setRoomCodeValid] = useState(true);
+  const history = useHistory();
 
-  const socket = useWebSocket();
 
   const handleClick = (e: any) => {
     e.preventDefault();
     const data: JoinData = {
       name: name,
-      roomCode: roomCode,
+      gameId: roomCode,
       event: LandingEvent.JOIN
     }
 
@@ -33,7 +33,7 @@ export const JoinGame = (props: { name: string, validateNameCallback: (nameValid
         data: data
       }
 
-      socket.send(message);
+      history.push('/game', message);
     }
   };
 
@@ -47,7 +47,7 @@ export const JoinGame = (props: { name: string, validateNameCallback: (nameValid
       validateNameCallback(true);
     }
 
-    if (data.roomCode.length === 0) {
+    if (data.gameId.length === 0) {
       setRoomCodeValid(false);
       valid = false;
     }

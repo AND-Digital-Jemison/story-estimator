@@ -83,7 +83,7 @@ describe("StoryEventHandlerService", () => {
       const gameId = "00001";
       const userName = "new user";
       const newGameEvent = {
-        userName: userName,
+        name: userName,
         gameId: gameId
       } as JoinGameEvent;
       const existingGame = getNewGame(gameId, client);

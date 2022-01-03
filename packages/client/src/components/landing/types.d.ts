@@ -8,6 +8,6 @@ export interface CreateData {
 
 export interface JoinData {
     name: string;
-    roomCode: string;
+    gameId: string;
     event: LandingEvent.JOIN;
 }

@@ -1,5 +1,8 @@
 /* eslint-disable react/jsx-key */
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from "react";
+import { useLocation } from "react-router";
+import { useSocket } from "~/components/App/socket-context";
+import { Message } from "~/components/hooks/web-socket/types";
 import {
   CardContainer,
   GameButton,
@@ -8,47 +11,99 @@ import {
   PlayerCards,
   RoomCode,
   RoomContainer,
-  Title,
-} from './game-styles';
+  Title
+} from "./game-styles";
 
-import { Story } from './Story';
-import { Card } from './Card';
-import { Points } from './Points';
+import { Story } from "./Story";
+import { Card } from "./Card";
+import { Points } from "./Points";
+
+interface CurrentRound {
+  selectedPoint?: string;
+  hasVoted: boolean;
+}
+
+interface User {
+  id: number;
+  name: string;
+  userRound: CurrentRound;
+}
+
+interface FullGame {
+  id: string;
+  users: User[];
+  rounds: [];
+  currentRound: CurrentRound;
+}
 
 export const Game = () => {
-  const userData = [
-    { id: 1, name: 'Dale', selected: true, point: null },
-    { id: 2, name: 'Jack', selected: false, point: null },
-    { id: 3, name: 'Nimra', selected: true, point: null },
-    { id: 4, name: 'Shuyan', selected: false, point: null },
-  ];
 
-  const [users, setUsers] = useState(userData);
+  const [game, setGame] = useState<FullGame | undefined>();
+  const location = useLocation();
+
+  const {
+    state: { socket }
+  } = useSocket();
+
+  const messageHandler = (event) => {
+    console.log("from server (game)", event);
+    // eslint-disable-next-line no-prototype-builtins
+    if(!event.hasOwnProperty('event')){
+      setGame(event);
+    }
+
+  };
+
+  useEffect(() => {
+    console.log(location.state);
+    socket.connect2(messageHandler).then(() => {
+      socket.send(location.state as Message);
+    });
+  }, []);
+
 
   const fiboNums = [0, 1, 2, 3, 5, 8, 13, 21, 34, 55];
 
+  const clickNumberEvent = (selectedNumber) =>{
+    console.log('selected number', selectedNumber);
+    socket.send({
+      event: 'story-event-listener',
+      data: {
+        event: 'point',
+        userId: game.users[0].id, // todo figure out which user i am
+        gameId: game.id,
+        point: selectedNumber
+      }
+    });
+  }
 
-  return (
-    <RoomContainer>
-      <RoomCode>Room Code: 4a5b</RoomCode>
-      <GameContainer>
-        <Title>Planning Poker</Title>
-        <Story />
-        <CardContainer>
-          {users.map(user => (
-            <PlayerCards key={user.id + user.name}>
-              <Card key={user.id} user={user} />
-              <Name key={user.name}>{user.name}</Name>
-            </PlayerCards>
-          ))}
-        </CardContainer>
-        <GameButton>Reveal</GameButton>
-        <CardContainer>
-          {fiboNums.map(num => (
-            <Points key={'fibo' + num} num={num} />
-          ))}
-        </CardContainer>
-      </GameContainer>
-    </RoomContainer>
-  );
+  return (<div>
+    {
+      game ?
+        <RoomContainer>
+          <RoomCode>Room Code: {game.id}</RoomCode>
+          <GameContainer>
+            <Title>Planning Poker</Title>
+            <Story />
+            <CardContainer>
+              {game.users.map(user => (
+                <PlayerCards key={user.id + user.name}>
+                  <Card key={user.id} user={user} />
+                  <Name key={user.name}>{user.name}</Name>
+                </PlayerCards>
+              ))}
+            </CardContainer>
+            <GameButton>Reveal</GameButton>
+            <CardContainer>
+              {fiboNums.map(num => (
+                <Points key={"fibo" + num} num={num} click={clickNumberEvent}/>
+              ))}
+            </CardContainer>
+          </GameContainer>
+        </RoomContainer>
+
+        : <div>Connecting</div>
+
+    }
+  </div>);
 };
