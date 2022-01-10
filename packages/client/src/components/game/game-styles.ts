@@ -56,7 +56,6 @@ export const CardBox = styled(ResultBox)`
   line-height: 120px;
   border: 3px solid #2897ff;
   box-shadow: 0px 4px 5px #888888;
-  background: ${props => (props.selected ? '#2897ff' : 'none')};
 `;
 
 export const PointBox = styled(CardBox)`
@@ -74,6 +73,8 @@ export const PointBox = styled(CardBox)`
     border: 3px solid #5ac328;
   }
   cursor: pointer;
+  transform: ${props =>
+    props.num === props.clickedNum ? 'translateY(-50px)' : '0'};
 `;
 
 export const CardContainer = styled.div`

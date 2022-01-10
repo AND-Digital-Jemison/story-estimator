@@ -39,6 +39,7 @@ interface FullGame {
 export const Game = () => {
 
   const [game, setGame] = useState<FullGame | undefined>();
+  const [clickedNum, setClickedNum] = useState(null);
   const location = useLocation();
 
   const {
@@ -75,6 +76,10 @@ export const Game = () => {
         point: selectedNumber
       }
     });
+
+    clickedNum === selectedNumber
+      ? setClickedNum(null)
+      : setClickedNum(selectedNumber);
   }
 
   return (<div>
@@ -96,7 +101,7 @@ export const Game = () => {
             <GameButton>Reveal</GameButton>
             <CardContainer>
               {fiboNums.map(num => (
-                <Points key={"fibo" + num} num={num} click={clickNumberEvent}/>
+                <Points key={"fibo" + num} num={num} clickedNum={clickedNum} click={clickNumberEvent}/>
               ))}
             </CardContainer>
           </GameContainer>
