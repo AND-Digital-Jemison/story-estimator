@@ -51,11 +51,12 @@ export const CardBox = styled(ResultBox)`
   height: 120px;
   width: 77px;
   font-size: 36px;
-  font-weight:300;
+  font-weight: 300;
   margin: 20px 40px;
   line-height: 120px;
   border: 3px solid #2897ff;
   box-shadow: 0px 4px 5px #888888;
+  background: ${props => (props.hasVoted ? '#2897FF' : 'none')};
 `;
 
 export const PointBox = styled(CardBox)`
