@@ -1,12 +1,12 @@
-import { StoryEvents } from "../../constants/story-events";
+import { StoryEvents } from '../../constants/story-events';
 
 export class NewGameEvent {
   event = StoryEvents.create;
   name: string;
-  title?: string;
+  story?: string;
 
-  constructor(name: string, title?: string) {
+  constructor(name: string, story?: string) {
     this.name = name;
-    this.title = title;
+    this.story = story;
   }
 }

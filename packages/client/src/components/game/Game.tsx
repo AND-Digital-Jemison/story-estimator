@@ -1,8 +1,8 @@
 /* eslint-disable react/jsx-key */
-import React, { useCallback, useEffect, useState } from "react";
-import { useLocation } from "react-router";
-import { useSocket } from "~/components/App/socket-context";
-import { Message } from "~/components/hooks/web-socket/types";
+import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router';
+import { useSocket } from '~/components/App/socket-context';
+import { Message } from '~/components/hooks/web-socket/types';
 import {
   CardContainer,
   GameButton,
@@ -11,12 +11,12 @@ import {
   PlayerCards,
   RoomCode,
   RoomContainer,
-  Title
-} from "./game-styles";
+  Title,
+} from './game-styles';
 
-import { Story } from "./Story";
-import { Card } from "./Card";
-import { Points } from "./Points";
+import { Story } from './Story';
+import { Card } from './Card';
+import { Points } from './Points';
 
 interface CurrentRound {
   selectedPoint?: string;
@@ -34,25 +34,24 @@ interface FullGame {
   users: User[];
   rounds: [];
   currentRound: CurrentRound;
+  story: string;
 }
 
 export const Game = () => {
-
   const [game, setGame] = useState<FullGame | undefined>();
   const [clickedNum, setClickedNum] = useState(null);
   const location = useLocation();
 
   const {
-    state: { socket }
+    state: { socket },
   } = useSocket();
 
-  const messageHandler = (event) => {
-    console.log("from server (game)", event);
+  const messageHandler = event => {
+    console.log('from server (game)', event);
     // eslint-disable-next-line no-prototype-builtins
-    if(!event.hasOwnProperty('event')){
+    if (!event.hasOwnProperty('event')) {
       setGame(event);
     }
-
   };
 
   useEffect(() => {
@@ -62,10 +61,9 @@ export const Game = () => {
     });
   }, []);
 
-
   const fiboNums = [0, 1, 2, 3, 5, 8, 13, 21, 34, 55];
 
-  const clickNumberEvent = (selectedNumber) =>{
+  const clickNumberEvent = selectedNumber => {
     console.log('Users', game.users);
     const userId: number = game.users.find(
       user => user.name === location.state.data.name
@@ -76,18 +74,18 @@ export const Game = () => {
         event: 'point',
         userId, // todo figure out which user i am
         gameId: game.id,
-        point: selectedNumber
-      }
+        point: selectedNumber,
+      },
     });
 
     clickedNum === selectedNumber
       ? setClickedNum(null)
       : setClickedNum(selectedNumber);
-  }
+  };
 
-  return (<div>
-    {
-      game ?
+  return (
+    <div>
+      {game ? (
         <RoomContainer>
           <RoomCode>Room Code: {game.id}</RoomCode>
           <GameContainer>
@@ -114,9 +112,9 @@ export const Game = () => {
             </CardContainer>
           </GameContainer>
         </RoomContainer>
-
-        : <div>Connecting</div>
-
-    }
-  </div>);
+      ) : (
+        <div>Connecting</div>
+      )}
+    </div>
+  );
 };
