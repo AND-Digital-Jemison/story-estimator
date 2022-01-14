@@ -56,7 +56,7 @@ export const Game = () => {
   };
 
   useEffect(() => {
-    console.log(location.state);
+    console.log('location', location.state);
     socket.connect2(messageHandler).then(() => {
       socket.send(location.state as Message);
     });
@@ -66,12 +66,15 @@ export const Game = () => {
   const fiboNums = [0, 1, 2, 3, 5, 8, 13, 21, 34, 55];
 
   const clickNumberEvent = (selectedNumber) =>{
-    console.log('selected number', selectedNumber);
+    console.log('Users', game.users);
+    const userId: number = game.users.find(
+      user => user.name === location.state.data.name
+    )?.id;
     socket.send({
       event: 'story-event-listener',
       data: {
         event: 'point',
-        userId: game.users[0].id, // todo figure out which user i am
+        userId, // todo figure out which user i am
         gameId: game.id,
         point: selectedNumber
       }
@@ -89,7 +92,7 @@ export const Game = () => {
           <RoomCode>Room Code: {game.id}</RoomCode>
           <GameContainer>
             <Title>Planning Poker</Title>
-            <Story />
+            <Story storyTitle={location.state.data.story} />
             <CardContainer>
               {game.users.map(user => (
                 <PlayerCards key={user.id + user.name}>
@@ -101,7 +104,12 @@ export const Game = () => {
             <GameButton>Reveal</GameButton>
             <CardContainer>
               {fiboNums.map(num => (
-                <Points key={"fibo" + num} num={num} clickedNum={clickedNum} click={clickNumberEvent}/>
+                <Points
+                  key={'fibo' + num}
+                  num={num}
+                  clickedNum={clickedNum}
+                  click={clickNumberEvent}
+                />
               ))}
             </CardContainer>
           </GameContainer>

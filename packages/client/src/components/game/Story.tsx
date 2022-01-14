@@ -1,13 +1,12 @@
 import React from 'react';
 import { ResultBox, StoryContainer } from './game-styles';
 
-export const Story = () => {
+export const Story = ({ storyTitle }) => {
+  console.log(storyTitle)
   return (
     <StoryContainer>
       <ResultBox>?</ResultBox>
-      <p>
-        As a user I want to be able to join an existing game or create a new one
-      </p>
+      <p>{storyTitle ? storyTitle : 'Default Story'}</p>
     </StoryContainer>
   );
 };
