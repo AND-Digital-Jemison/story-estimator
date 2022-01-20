@@ -90,7 +90,7 @@ export const Game = () => {
           <RoomCode>Room Code: {game.id}</RoomCode>
           <GameContainer>
             <Title>Planning Poker</Title>
-            <Story storyTitle={location.state.data.story} />
+            <Story storyTitle={game.story} />
             <CardContainer>
               {game.users.map(user => (
                 <PlayerCards key={user.id + user.name}>
