@@ -47,7 +47,6 @@ export const Game = () => {
   } = useSocket();
 
   const messageHandler = event => {
-    console.log('from server (game)', event);
     // eslint-disable-next-line no-prototype-builtins
     if (!event.hasOwnProperty('event')) {
       setGame(event);
@@ -55,7 +54,6 @@ export const Game = () => {
   };
 
   useEffect(() => {
-    console.log('location', location.state);
     socket.connect2(messageHandler).then(() => {
       socket.send(location.state as Message);
     });
@@ -64,7 +62,6 @@ export const Game = () => {
   const fiboNums = [0, 1, 2, 3, 5, 8, 13, 21, 34, 55];
 
   const clickNumberEvent = selectedNumber => {
-    console.log('Users', game.users);
     const userId: number = game.users.find(
       user => user.name === location.state.data.name
     )?.id;
@@ -72,12 +69,13 @@ export const Game = () => {
       event: 'story-event-listener',
       data: {
         event: 'point',
-        userId, // todo figure out which user i am
+        userId, 
         gameId: game.id,
-        point: selectedNumber,
+        point: clickedNum === selectedNumber ? null : selectedNumber,
       },
     });
 
+    // eslint-disable-next-line no-unused-expressions
     clickedNum === selectedNumber
       ? setClickedNum(null)
       : setClickedNum(selectedNumber);

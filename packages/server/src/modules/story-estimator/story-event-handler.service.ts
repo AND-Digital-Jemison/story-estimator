@@ -62,10 +62,12 @@ export class StoryEventHandlerService {
     if (!user) {
       throw new Error('User not found');
     }
-    user.userRound = {
-      selectedPoint: event.point,
-      hasVoted: true,
-    };
+
+      user.userRound = {
+        selectedPoint: event.point,
+        hasVoted: event.point === null ? false : true,
+      };
+
     game.updateClients();
   }
 }
