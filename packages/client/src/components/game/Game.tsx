@@ -40,6 +40,7 @@ interface FullGame {
 export const Game = () => {
   const [game, setGame] = useState<FullGame | undefined>();
   const [clickedNum, setClickedNum] = useState(null);
+  const [isRevealed, setIsRevealed] = useState(false);
   const location = useLocation();
 
   const {
@@ -74,12 +75,18 @@ export const Game = () => {
         point: clickedNum === selectedNumber ? null : selectedNumber,
       },
     });
-
     // eslint-disable-next-line no-unused-expressions
     clickedNum === selectedNumber
       ? setClickedNum(null)
       : setClickedNum(selectedNumber);
   };
+  
+  const clickRevealEvent = () => {
+    // if all users has voted, then;
+    setIsRevealed(true);
+    setClickedNum(null);
+  }
+
 
   return (
     <div>
@@ -92,12 +99,12 @@ export const Game = () => {
             <CardContainer>
               {game.users.map(user => (
                 <PlayerCards key={user.id + user.name}>
-                  <Card key={user.id} user={user} />
+                  <Card key={user.id} user={user} isRevealed={isRevealed} />
                   <Name key={user.name}>{user.name}</Name>
                 </PlayerCards>
               ))}
             </CardContainer>
-            <GameButton>Reveal</GameButton>
+            <GameButton onClick={clickRevealEvent}>Reveal</GameButton>
             <CardContainer>
               {fiboNums.map(num => (
                 <Points

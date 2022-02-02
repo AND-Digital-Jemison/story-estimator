@@ -56,7 +56,8 @@ export const CardBox = styled(ResultBox)`
   line-height: 120px;
   border: 3px solid #2897ff;
   box-shadow: 0px 4px 5px #888888;
-  background: ${props => (props.hasVoted ? '#2897FF' : 'none')};
+  background: ${props =>
+    props.hasVoted && !props.isRevealed ? '#2897FF' : 'none'};
 `;
 
 export const PointBox = styled(CardBox)`
