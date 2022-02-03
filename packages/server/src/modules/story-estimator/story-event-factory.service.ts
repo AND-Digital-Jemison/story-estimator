@@ -15,15 +15,23 @@ export class StoryEventFactoryService {
    }
 
    handle(client: WebSocket, event: GameEvent) {
-      console.log("handler", event);
-      if (StoryEvents.create === event.event) {
-         this.storyEventService.create(client, event as NewGameEvent);
-      } else if (StoryEvents.join === event.event) {
-         this.storyEventService.join(client, event as JoinGameEvent);
-      } else if (StoryEvents.point === event.event) {
-         this.storyEventService.point(event as PointGameEvent);
-      } else if (StoryEvents.complete === event.event) {
-         this.storyEventService.complete(event as CompleteRoundEvent);
+      console.log("StoryEventFactoryService, Handling event: ", event);
+
+      switch(event.event){
+         case StoryEvents.create: 
+            this.storyEventService.create(client, event as NewGameEvent);
+            break;
+         case StoryEvents.join: 
+            this.storyEventService.join(client, event as JoinGameEvent);
+            break;
+         case StoryEvents.point: 
+            this.storyEventService.point(event as PointGameEvent);
+            break;
+         case StoryEvents.complete: 
+            this.storyEventService.complete(event as CompleteRoundEvent);
+            break;
+         default: 
+            console.log("Unexpected event type: ", event.event);
       }
    }
 }
