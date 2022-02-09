@@ -87,6 +87,11 @@ export const Game = () => {
     setClickedNum(null);
   };
 
+  const isRevealedButtonDisabled = (): boolean =>
+    game.users.some(user => {
+      return user.userRound.hasVoted === false;
+    });
+
   return (
     <div>
       {game ? (
@@ -103,7 +108,12 @@ export const Game = () => {
                 </PlayerCards>
               ))}
             </CardContainer>
-            <GameButton onClick={clickRevealEvent}>Reveal</GameButton>
+            <GameButton
+              disabled={isRevealedButtonDisabled()}
+              onClick={clickRevealEvent}
+            >
+              Reveal
+            </GameButton>
             <CardContainer>
               {fiboNums.map(num => (
                 <Points
