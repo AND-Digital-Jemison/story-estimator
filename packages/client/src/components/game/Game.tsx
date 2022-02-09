@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-key */
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
-import { useSocket } from '~/components/App/socket-context';
+import { useSocket } from '~/components/hooks/web-socket/socket-context';
 import { Message } from '~/components/hooks/web-socket/types';
 import {
   CardContainer,
