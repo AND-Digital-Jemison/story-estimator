@@ -55,7 +55,7 @@ export const Game = () => {
   };
 
   useEffect(() => {
-    socket.connect2(messageHandler).then(() => {
+    socket.connect(messageHandler).then(() => {
       socket.send(location.state as Message);
     });
   }, []);
@@ -70,7 +70,7 @@ export const Game = () => {
       event: 'story-event-listener',
       data: {
         event: 'point',
-        userId, 
+        userId,
         gameId: game.id,
         point: clickedNum === selectedNumber ? null : selectedNumber,
       },
@@ -80,13 +80,12 @@ export const Game = () => {
       ? setClickedNum(null)
       : setClickedNum(selectedNumber);
   };
-  
+
   const clickRevealEvent = () => {
     // if all users has voted, then;
     setIsRevealed(true);
     setClickedNum(null);
-  }
-
+  };
 
   return (
     <div>
