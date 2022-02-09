@@ -19,7 +19,7 @@ export class SocketService {
       this.socket.onerror = error => reject(error);
 
       this.socket.onmessage = (event: any) => {
-        this.log('Received msg: ', event.data);
+        this.log('Received msg: ', JSON.parse(event.data));
         this.event = event;
         this.messageCallback(JSON.parse(event.data));
       };
@@ -28,8 +28,8 @@ export class SocketService {
 
   send = (message: Message | any) => {
     try {
+      this.log('Sending msg:', message);
       const msg = JSON.stringify(message);
-      this.log('Sending msg:', msg);
       this.socket.send(msg);
     } catch (error) {
       console.error(error);
