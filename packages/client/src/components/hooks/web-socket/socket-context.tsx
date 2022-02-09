@@ -14,8 +14,6 @@ const socketReducer = (state: State, action: Action) => {
 };
 
 const SocketProvider = ({ children }) => {
-  console.log('SocketProvider');
-
   const [state, dispatch] = React.useReducer(socketReducer, {
     socket: new SocketService(),
   });
