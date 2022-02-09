@@ -87,7 +87,7 @@ export const Game = () => {
     setClickedNum(null);
   };
 
-  const isRevealedButtonDisabled = (): boolean =>
+  const isRevealButtonDisabled = (): boolean =>
     game.users.some(user => {
       return user.userRound.hasVoted === false;
     });
@@ -109,7 +109,7 @@ export const Game = () => {
               ))}
             </CardContainer>
             <GameButton
-              disabled={isRevealedButtonDisabled()}
+              disabled={isRevealButtonDisabled()}
               onClick={clickRevealEvent}
             >
               Reveal
