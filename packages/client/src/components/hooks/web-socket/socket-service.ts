@@ -1,6 +1,6 @@
-import { Message } from '~/components/hooks/web-socket/types';
+import { Message, ISocketService } from '~/components/hooks/web-socket/types';
 
-export class SocketService {
+export class SocketService implements ISocketService {
   private socketUrl = 'ws://localhost:8001';
   private socket;
   public event;
