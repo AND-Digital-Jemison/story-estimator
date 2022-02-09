@@ -98,7 +98,8 @@ export const Name = styled.p`
 `;
 
 export const GameButton = styled(Button)`
-  background: #ff323c;
+  background: ${props => (props.disabled ? '#cfd4dd' : '#ff323c')};
+  color: ${props => (props.disabled ? '#313131' : '#fffff')};
   width: 139px;
   height: 76px;
   margin-top: 35px;
