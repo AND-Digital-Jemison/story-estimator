@@ -6,6 +6,7 @@ export class Session {
   users: User[];
   rounds: Round[];
   currentRound: Round;
+  currentRoundRevealed: boolean;
   story?: string;
 
   constructor(id: string, story?: string) {
@@ -13,6 +14,7 @@ export class Session {
     this.users = [];
     this.rounds = [];
     this.currentRound = new Round(1);
+    this.currentRoundRevealed = false;
     this.story = story;
   }
 }

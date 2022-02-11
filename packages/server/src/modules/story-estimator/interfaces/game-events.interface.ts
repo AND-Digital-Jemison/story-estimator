@@ -8,6 +8,7 @@ export interface GameEvents {
   create: (event: NewGameEvent) => Session;
   join: (event: JoinGameEvent) => Session;
   point: (event: PointGameEvent) => Session;
+  reveal: (event: PointGameEvent) => Session;
   complete: (event: CompleteRoundEvent) => Session;
   end: (gameId: string) => void;
 }

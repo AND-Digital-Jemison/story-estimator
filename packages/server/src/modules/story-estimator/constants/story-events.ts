@@ -4,8 +4,9 @@ export enum StoryEvents {
   create = "create",
   join = "join",
   point = "point",
+  reveal = "reveal",
   complete = "complete",
-  end = "end"
+  end = "end",
 }
 
 

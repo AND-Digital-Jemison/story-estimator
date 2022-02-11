@@ -34,13 +34,13 @@ interface FullGame {
   users: User[];
   rounds: [];
   currentRound: CurrentRound;
+  currentRoundRevealed: boolean;
   story: string;
 }
 
 export const Game = () => {
   const [game, setGame] = useState<FullGame | undefined>();
   const [clickedNum, setClickedNum] = useState(null);
-  const [isRevealed, setIsRevealed] = useState(false);
   const location = useLocation();
 
   const {
@@ -82,9 +82,14 @@ export const Game = () => {
   };
 
   const clickRevealEvent = () => {
-    // if all users has voted, then;
-    setIsRevealed(true);
-    setClickedNum(null);
+
+    socket.send({
+      event: 'story-event-listener',
+      data: {
+        event: 'reveal',
+        gameId: game.id,
+      },
+    });
   };
 
   const isRevealButtonDisabled = (): boolean =>
@@ -103,7 +108,11 @@ export const Game = () => {
             <CardContainer>
               {game.users.map(user => (
                 <PlayerCards key={user.id + user.name}>
-                  <Card key={user.id} user={user} isRevealed={isRevealed} />
+                  <Card
+                    key={user.id}
+                    user={user}
+                    isRevealed={game.currentRoundRevealed}
+                  />
                   <Name key={user.name}>{user.name}</Name>
                 </PlayerCards>
               ))}
@@ -119,7 +128,7 @@ export const Game = () => {
                 <Points
                   key={'fibo' + num}
                   num={num}
-                  clickedNum={clickedNum}
+                  clickedNum={game.currentRoundRevealed ? null : clickedNum}
                   click={clickNumberEvent}
                 />
               ))}
