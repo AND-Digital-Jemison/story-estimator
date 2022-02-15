@@ -79,6 +79,24 @@ export const PointBox = styled(CardBox)`
     props.num === props.clickedNum ? 'translateY(-50px)' : '0'};
 `;
 
+export const VoteCount = styled.div`
+  display: flex;
+  justify-content: end;
+  transform: translateY(40px);
+  > span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    font-weight: 600;
+    background: #2897ff;
+    color: #fff;
+  }
+`;
+
 export const CardContainer = styled.div`
   display: flex;
   height: 100%;
