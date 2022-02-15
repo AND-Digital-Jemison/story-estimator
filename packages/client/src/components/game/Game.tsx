@@ -41,7 +41,10 @@ interface FullGame {
 export const Game = () => {
   const [game, setGame] = useState<FullGame | undefined>();
   const [clickedNum, setClickedNum] = useState(null);
+  const [currentRoundVotesCount, setCurrentRoundVotesCount] = useState({});
   const location = useLocation();
+
+  const fiboNums = [0, 1, 2, 3, 5, 8, 13, 21, 34, 55];
 
   const {
     state: { socket },
@@ -51,6 +54,11 @@ export const Game = () => {
     // eslint-disable-next-line no-prototype-builtins
     if (!event.hasOwnProperty('event')) {
       setGame(event);
+
+      // current round revealed: count votes
+      if (event['currentRoundRevealed']) {
+        countCurrentRoundVotes(event);
+      }
     }
   };
 
@@ -59,8 +67,6 @@ export const Game = () => {
       socket.send(location.state as Message);
     });
   }, []);
-
-  const fiboNums = [0, 1, 2, 3, 5, 8, 13, 21, 34, 55];
 
   const clickNumberEvent = selectedNumber => {
     const userId: number = game.users.find(
@@ -82,7 +88,6 @@ export const Game = () => {
   };
 
   const clickRevealEvent = () => {
-
     socket.send({
       event: 'story-event-listener',
       data: {
@@ -96,6 +101,21 @@ export const Game = () => {
     game.users.some(user => {
       return user.userRound.hasVoted === false;
     });
+
+  const countCurrentRoundVotes = event => {
+    let roundVotesCount = {};
+
+    const roundUsers = event.users;
+    roundUsers.forEach(user => {
+      const userVote = user.userRound.selectedPoint;
+
+      roundVotesCount[userVote] = roundVotesCount[userVote]
+        ? roundVotesCount[userVote] + 1
+        : 1;
+    });
+
+    setCurrentRoundVotesCount(roundVotesCount);
+  };
 
   return (
     <div>
@@ -125,12 +145,21 @@ export const Game = () => {
             </GameButton>
             <CardContainer>
               {fiboNums.map(num => (
-                <Points
-                  key={'fibo' + num}
-                  num={num}
-                  clickedNum={game.currentRoundRevealed ? null : clickedNum}
-                  click={clickNumberEvent}
-                />
+                <div key={num}>
+                  {game.currentRoundRevealed && (
+                    <div key={'voteCount' + num}>
+                      {currentRoundVotesCount[num]
+                        ? currentRoundVotesCount[num]
+                        : 0}
+                    </div>
+                  )}
+                  <Points
+                    key={'fibo' + num}
+                    num={num}
+                    clickedNum={game.currentRoundRevealed ? null : clickedNum}
+                    click={clickNumberEvent}
+                  />
+                </div>
               ))}
             </CardContainer>
           </GameContainer>
