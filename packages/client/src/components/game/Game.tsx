@@ -41,7 +41,9 @@ interface FullGame {
 export const Game = () => {
   const [game, setGame] = useState<FullGame | undefined>();
   const [clickedNum, setClickedNum] = useState(null);
-  const [currentRoundVotesCount, setCurrentRoundVotesCount] = useState({});
+  const [currentRoundVotesCount, setCurrentRoundVotesCount] = useState<
+    Map<string, number>
+  >(new Map());
   const location = useLocation();
 
   const fiboNums = [0, 1, 2, 3, 5, 8, 13, 21, 34, 55];
@@ -68,7 +70,7 @@ export const Game = () => {
     });
   }, []);
 
-  const clickNumberEvent = (selectedNumber): void => {
+  const clickNumberEvent = (selectedNumber: number): void => {
     const userId: number = game.users.find(
       user => user.name === location.state.data.name
     )?.id;
@@ -103,7 +105,7 @@ export const Game = () => {
     });
 
   const countCurrentRoundVotes = (event: FullGame): void => {
-    const roundVotesCount = {};
+    const roundVotesCount: Map<string, number> = new Map();
 
     const roundUsers = event.users;
     roundUsers.forEach(user => {
