@@ -113,11 +113,8 @@ export const Game = () => {
       mostVoted: null,
       votesCount: new Map(),
     };
-
     const roundUsers = event.users;
-    let mostVoted = 0;
 
-    // [3, 5]
     roundUsers.forEach(user => {
       const userVote = user.userRound.selectedPoint;
 
@@ -126,19 +123,23 @@ export const Game = () => {
       ]
         ? roundVotesCount.votesCount[userVote] + 1
         : 1;
-
-      if (parseInt(roundVotesCount.votesCount[userVote], 10) >= mostVoted) {
-        mostVoted = parseInt(userVote, 10);
-      }
     });
 
-    roundVotesCount.mostVoted = mostVoted;
+    // extract key of most voted point from count
+    let max = 0;
+    let mostVoted = '';
 
-    console.log(roundVotesCount);
+    for (const voteKey in roundVotesCount.votesCount) {
+      if (roundVotesCount.votesCount[voteKey] >= max) {
+        max = roundVotesCount.votesCount[voteKey];
+        mostVoted = voteKey;
+      }
+    }
+
+    roundVotesCount.mostVoted = parseInt(mostVoted, 10);
 
     setCurrentRoundVotesCount(roundVotesCount);
   };
-
   return (
     <div>
       {game ? (
