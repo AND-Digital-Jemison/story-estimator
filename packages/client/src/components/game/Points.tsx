@@ -10,11 +10,12 @@ export const Points = ({
   currentRoundRevealed,
   voteCount,
   index,
+  isMostVoted,
 }) => {
   return (
     <div>
       {currentRoundRevealed && (
-        <VoteCount voteCount={voteCount}>
+        <VoteCount isMostVoted={isMostVoted} voteCount={voteCount}>
           <span>{voteCount ? voteCount : ''}</span>
         </VoteCount>
       )}

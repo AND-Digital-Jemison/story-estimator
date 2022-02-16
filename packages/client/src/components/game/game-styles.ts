@@ -82,11 +82,10 @@ export const VoteCount = styled.div`
     font-size: 1.5rem;
     font-weight: 600;
     background: ${props =>
-      props.voteCount !== undefined ? '#2897ff' : '#0000'};
+      props.voteCount ? (props.isMostVoted ? 'red' : '#2897ff') : '#0000'};
     color: #fff;
   }
 `;
-
 export const CardContainer = styled.div`
   display: flex;
   height: 100%;

@@ -38,12 +38,16 @@ interface FullGame {
   story: string;
 }
 
+interface RoundVotesCount {
+  mostVoted: number;
+  votesCount: Map<string, number>;
+}
+
 export const Game = () => {
   const [game, setGame] = useState<FullGame | undefined>();
   const [clickedNum, setClickedNum] = useState(null);
-  const [currentRoundVotesCount, setCurrentRoundVotesCount] = useState<
-    Map<string, number>
-  >(new Map());
+  const [currentRoundVotesCount, setCurrentRoundVotesCount] =
+    useState<RoundVotesCount>({ mostVoted: null, votesCount: new Map() });
   const location = useLocation();
 
   const fiboNums = [0, 1, 2, 3, 5, 8, 13, 21, 34, 55];
@@ -105,16 +109,32 @@ export const Game = () => {
     });
 
   const countCurrentRoundVotes = (event: FullGame): void => {
-    const roundVotesCount: Map<string, number> = new Map();
+    const roundVotesCount: RoundVotesCount = {
+      mostVoted: null,
+      votesCount: new Map(),
+    };
 
     const roundUsers = event.users;
+    let mostVoted = 0;
+
+    // [3, 5]
     roundUsers.forEach(user => {
       const userVote = user.userRound.selectedPoint;
 
-      roundVotesCount[userVote] = roundVotesCount[userVote]
-        ? roundVotesCount[userVote] + 1
+      roundVotesCount.votesCount[userVote] = roundVotesCount.votesCount[
+        userVote
+      ]
+        ? roundVotesCount.votesCount[userVote] + 1
         : 1;
+
+      if (parseInt(roundVotesCount.votesCount[userVote], 10) >= mostVoted) {
+        mostVoted = parseInt(userVote, 10);
+      }
     });
+
+    roundVotesCount.mostVoted = mostVoted;
+
+    console.log(roundVotesCount);
 
     setCurrentRoundVotesCount(roundVotesCount);
   };
@@ -151,7 +171,10 @@ export const Game = () => {
                   key={'fibo' + num}
                   num={num}
                   index={index}
-                  voteCount={currentRoundVotesCount[num]}
+                  isMostVoted={
+                    currentRoundVotesCount.mostVoted === num ? true : false
+                  }
+                  voteCount={currentRoundVotesCount.votesCount[num]}
                   currentRoundRevealed={game.currentRoundRevealed}
                   clickedNum={game.currentRoundRevealed ? null : clickedNum}
                   click={clickNumberEvent}
