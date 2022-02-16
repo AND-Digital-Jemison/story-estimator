@@ -11,8 +11,8 @@ export const Points = ({
   return (
     <div>
       {currentRoundRevealed && (
-        <VoteCount>
-          <span>{voteCount ? voteCount : 0}</span>
+        <VoteCount voteCount={voteCount}>
+          <span>{voteCount ? voteCount : ''}</span>
         </VoteCount>
       )}
 

@@ -75,7 +75,7 @@ export const PointBox = styled(CardBox)`
     border: 3px solid #5ac328;
   }
   cursor: pointer;
-  transform: ${props =>
+  transform: ${props => 
     props.num === props.clickedNum ? 'translateY(-50px)' : '0'};
 `;
 
@@ -92,7 +92,8 @@ export const VoteCount = styled.div`
     border-radius: 50%;
     font-size: 1.5rem;
     font-weight: 600;
-    background: #2897ff;
+    background: ${props => 
+      props.voteCount !== undefined ? '#2897ff' : '#0000'};
     color: #fff;
   }
 `;
