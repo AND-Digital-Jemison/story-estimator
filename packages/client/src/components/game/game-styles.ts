@@ -62,20 +62,9 @@ export const CardBox = styled(ResultBox)`
 
 export const PointBox = styled(CardBox)`
   margin: 10px 20px;
-  &:nth-child(4n + 1) {
-    border: 3px solid #ff323c;
-  }
-  &:nth-child(4n + 2) {
-    border: 3px solid #ffc800;
-  }
-  &:nth-child(4n + 3) {
-    border: 3px solid #a050ff;
-  }
-  &:nth-child(4n + 4) {
-    border: 3px solid #5ac328;
-  }
+  border: 3px solid ${props => props.borderColor};
   cursor: pointer;
-  transform: ${props => 
+  transform: ${props =>
     props.num === props.clickedNum ? 'translateY(-50px)' : '0'};
 `;
 
@@ -92,7 +81,7 @@ export const VoteCount = styled.div`
     border-radius: 50%;
     font-size: 1.5rem;
     font-weight: 600;
-    background: ${props => 
+    background: ${props =>
       props.voteCount !== undefined ? '#2897ff' : '#0000'};
     color: #fff;
   }

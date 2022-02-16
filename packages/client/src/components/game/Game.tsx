@@ -146,10 +146,11 @@ export const Game = () => {
               Reveal
             </GameButton>
             <CardContainer>
-              {fiboNums.map(num => (
+              {fiboNums.map((num, index) => (
                 <Points
                   key={'fibo' + num}
                   num={num}
+                  index={index}
                   voteCount={currentRoundVotesCount[num]}
                   currentRoundRevealed={game.currentRoundRevealed}
                   clickedNum={game.currentRoundRevealed ? null : clickedNum}
