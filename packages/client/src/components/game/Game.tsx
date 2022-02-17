@@ -109,19 +109,14 @@ export const Game = () => {
     });
 
   const countCurrentRoundVotes = (event: FullGame): void => {
-    const roundVotesCount: RoundVotesCount = {
-      mostVoted: null,
-      votesCount: new Map(),
-    };
     const roundUsers = event.users;
+    const votesCount = new Map<string, number>();
 
     roundUsers.forEach(user => {
       const userVote = user.userRound.selectedPoint;
 
-      roundVotesCount.votesCount[userVote] = roundVotesCount.votesCount[
-        userVote
-      ]
-        ? roundVotesCount.votesCount[userVote] + 1
+      votesCount[userVote] = votesCount[userVote]
+        ? votesCount[userVote] + 1
         : 1;
     });
 
@@ -129,14 +124,17 @@ export const Game = () => {
     let max = 0;
     let mostVoted = '';
 
-    for (const voteKey in roundVotesCount.votesCount) {
-      if (roundVotesCount.votesCount[voteKey] >= max) {
-        max = roundVotesCount.votesCount[voteKey];
+    for (const voteKey in votesCount) {
+      if (votesCount[voteKey] >= max) {
+        max = votesCount[voteKey];
         mostVoted = voteKey;
       }
     }
 
-    roundVotesCount.mostVoted = parseInt(mostVoted, 10);
+    const roundVotesCount: RoundVotesCount = {
+      mostVoted: parseInt(mostVoted, 10),
+      votesCount:votesCount
+    };
 
     setCurrentRoundVotesCount(roundVotesCount);
   };

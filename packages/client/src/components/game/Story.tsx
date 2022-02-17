@@ -5,7 +5,7 @@ export const Story = ({ storyTitle }) => {
   return (
     <StoryContainer>
       <ResultBox>?</ResultBox>
-      <p>{storyTitle ? storyTitle : 'Default Story'}</p>
+      <p>{storyTitle ? storyTitle : 'Some cool story'}</p>
     </StoryContainer>
   );
 };
