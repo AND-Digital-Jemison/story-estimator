@@ -1,10 +1,9 @@
 export interface Message {
-    event: string;
-    data: any;
+  event: string;
+  data: any;
 }
 
-export interface Socket {
-    connect: () => void;
-    send: (message: Message) => void;
-    response: Record<string, unknown>;
+export interface ISocketService {
+  connect: (messageHandler: (event) => void) => void;
+  send: (message: Message) => void;
 }

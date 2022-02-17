@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-key */
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
-import { useSocket } from '~/components/App/socket-context';
+import { useSocket } from '~/components/hooks/web-socket/socket-context';
 import { Message } from '~/components/hooks/web-socket/types';
 import {
   CardContainer,
@@ -34,34 +34,47 @@ interface FullGame {
   users: User[];
   rounds: [];
   currentRound: CurrentRound;
+  currentRoundRevealed: boolean;
   story: string;
+}
+
+interface RoundVotesCount {
+  mostVoted: number;
+  votesCount: Map<string, number>;
 }
 
 export const Game = () => {
   const [game, setGame] = useState<FullGame | undefined>();
   const [clickedNum, setClickedNum] = useState(null);
+  const [currentRoundVotesCount, setCurrentRoundVotesCount] =
+    useState<RoundVotesCount>({ mostVoted: null, votesCount: new Map() });
   const location = useLocation();
+
+  const fiboNums = [0, 1, 2, 3, 5, 8, 13, 21, 34, 55];
 
   const {
     state: { socket },
   } = useSocket();
 
-  const messageHandler = event => {
+  const messageHandler = (event: FullGame): void => {
     // eslint-disable-next-line no-prototype-builtins
     if (!event.hasOwnProperty('event')) {
       setGame(event);
+
+      // current round revealed: count votes
+      if (event.currentRoundRevealed) {
+        countCurrentRoundVotes(event);
+      }
     }
   };
 
   useEffect(() => {
-    socket.connect2(messageHandler).then(() => {
+    socket.connect(messageHandler).then(() => {
       socket.send(location.state as Message);
     });
   }, []);
 
-  const fiboNums = [0, 1, 2, 3, 5, 8, 13, 21, 34, 55];
-
-  const clickNumberEvent = selectedNumber => {
+  const clickNumberEvent = (selectedNumber: number): void => {
     const userId: number = game.users.find(
       user => user.name === location.state.data.name
     )?.id;
@@ -69,18 +82,62 @@ export const Game = () => {
       event: 'story-event-listener',
       data: {
         event: 'point',
-        userId, 
+        userId,
         gameId: game.id,
         point: clickedNum === selectedNumber ? null : selectedNumber,
       },
     });
-
     // eslint-disable-next-line no-unused-expressions
     clickedNum === selectedNumber
       ? setClickedNum(null)
       : setClickedNum(selectedNumber);
   };
 
+  const clickRevealEvent = (): void => {
+    socket.send({
+      event: 'story-event-listener',
+      data: {
+        event: 'reveal',
+        gameId: game.id,
+      },
+    });
+  };
+
+  const isRevealButtonDisabled = (): boolean =>
+    game.users.some(user => {
+      return user.userRound.hasVoted === false;
+    });
+
+  const countCurrentRoundVotes = (event: FullGame): void => {
+    const roundUsers = event.users;
+    const votesCount = new Map<string, number>();
+
+    roundUsers.forEach(user => {
+      const userVote = user.userRound.selectedPoint;
+
+      votesCount[userVote] = votesCount[userVote]
+        ? votesCount[userVote] + 1
+        : 1;
+    });
+
+    // extract key of most voted point from count
+    let max = 0;
+    let mostVoted = '';
+
+    for (const voteKey in votesCount) {
+      if (votesCount[voteKey] >= max) {
+        max = votesCount[voteKey];
+        mostVoted = voteKey;
+      }
+    }
+
+    const roundVotesCount: RoundVotesCount = {
+      mostVoted: parseInt(mostVoted, 10),
+      votesCount:votesCount
+    };
+
+    setCurrentRoundVotesCount(roundVotesCount);
+  };
   return (
     <div>
       {game ? (
@@ -92,18 +149,33 @@ export const Game = () => {
             <CardContainer>
               {game.users.map(user => (
                 <PlayerCards key={user.id + user.name}>
-                  <Card key={user.id} user={user} />
+                  <Card
+                    key={user.id}
+                    user={user}
+                    isRevealed={game.currentRoundRevealed}
+                  />
                   <Name key={user.name}>{user.name}</Name>
                 </PlayerCards>
               ))}
             </CardContainer>
-            <GameButton>Reveal</GameButton>
+            <GameButton
+              disabled={isRevealButtonDisabled()}
+              onClick={clickRevealEvent}
+            >
+              Reveal
+            </GameButton>
             <CardContainer>
-              {fiboNums.map(num => (
+              {fiboNums.map((num, index) => (
                 <Points
                   key={'fibo' + num}
                   num={num}
-                  clickedNum={clickedNum}
+                  index={index}
+                  isMostVoted={
+                    currentRoundVotesCount.mostVoted === num ? true : false
+                  }
+                  voteCount={currentRoundVotesCount.votesCount[num]}
+                  currentRoundRevealed={game.currentRoundRevealed}
+                  clickedNum={game.currentRoundRevealed ? null : clickedNum}
                   click={clickNumberEvent}
                 />
               ))}

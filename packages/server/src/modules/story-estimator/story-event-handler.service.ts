@@ -9,6 +9,7 @@ import { CompleteRoundEvent } from './classes/events/complete-round-event';
 import { JoinGameEvent } from './classes/events/join-game-event';
 import { NewGameEvent } from './classes/events/new-game-event';
 import { PointGameEvent } from './classes/events/point-game-event';
+import { RevealEvent } from './classes/events/reveal-event';
 import { StoryGameIdGeneratorService } from './story-game-id-generator.service';
 import { StoryGameRepository } from './story-game.repository';
 
@@ -70,4 +71,13 @@ export class StoryEventHandlerService {
 
     game.updateClients();
   }
+
+  reveal(event: RevealEvent) {
+    const game = this.storyGameRepository.getGame(event.gameId);
+    game.session.currentRoundRevealed = true;
+
+    game.updateClients();
+  }
 }
+
+
