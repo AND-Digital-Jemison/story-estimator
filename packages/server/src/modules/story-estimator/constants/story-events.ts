@@ -5,16 +5,7 @@ export enum StoryEvents {
   join = "join",
   point = "point",
   reveal = "reveal",
+  updateRoundVotes = "update-round-votes",
   complete = "complete",
   end = "end",
 }
-
-
-/*
-/* export class StoryEvents {
-  public static readonly CREATE = "CREATE";
-  public static readonly JOIN = "JOIN";
-  public static readonly POINT = "POINT";
-  public static readonly COMPLETE = "COMPLETE";
-  public static readonly END = "END";
-}*/

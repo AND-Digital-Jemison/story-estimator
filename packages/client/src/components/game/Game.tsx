@@ -36,6 +36,7 @@ interface FullGame {
   currentRound: CurrentRound;
   currentRoundRevealed: boolean;
   story: string;
+  currentRoundVotesCount?: RoundVotesCount;
 }
 
 interface RoundVotesCount {
@@ -75,6 +76,35 @@ export const Game = () => {
   }, []);
 
   const clickNumberEvent = (selectedNumber: number): void => {
+    if (currentRoundVotesCount.mostVoted) {
+      console.log(
+        'already reveal, taking click as event to overwrite most voted'
+      );
+
+      const newCurrentRoundVotesCount = {
+        ...currentRoundVotesCount,
+        mostVoted: selectedNumber,
+      };
+
+      setCurrentRoundVotesCount(newCurrentRoundVotesCount);
+
+      // client: send update to backend with new currentRoundVotesCount: event = change-most-voted
+      socket.send({
+        event: 'story-event-listener',
+        data: {
+          event: 'update-round-votes',
+          gameId: game.id,
+          currentRoundVotesCount: newCurrentRoundVotesCount,
+        },
+      });
+
+      // 2 backend: updated session with new currentRoundVotesCount value
+      // 3 backend: broadcast
+
+      // 4 client receive updated session and replaces UI one
+      return;
+    }
+
     const userId: number = game.users.find(
       user => user.name === location.state.data.name
     )?.id;
@@ -133,7 +163,7 @@ export const Game = () => {
 
     const roundVotesCount: RoundVotesCount = {
       mostVoted: parseInt(mostVoted, 10),
-      votesCount:votesCount
+      votesCount: votesCount,
     };
 
     setCurrentRoundVotesCount(roundVotesCount);
@@ -145,7 +175,10 @@ export const Game = () => {
           <RoomCode>Room Code: {game.id}</RoomCode>
           <GameContainer>
             <Title>Planning Poker</Title>
-            <Story storyTitle={game.story} />
+            <Story
+              storyTitle={game.story}
+              mostVoted={currentRoundVotesCount.mostVoted}
+            />
             <CardContainer>
               {game.users.map(user => (
                 <PlayerCards key={user.id + user.name}>

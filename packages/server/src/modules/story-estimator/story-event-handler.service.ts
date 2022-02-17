@@ -12,6 +12,7 @@ import { PointGameEvent } from './classes/events/point-game-event';
 import { RevealEvent } from './classes/events/reveal-event';
 import { StoryGameIdGeneratorService } from './story-game-id-generator.service';
 import { StoryGameRepository } from './story-game.repository';
+import { UpdateRoundVotesEvent } from './classes/events/update-round-votes-event';
 
 @Injectable()
 export class StoryEventHandlerService {
@@ -20,7 +21,7 @@ export class StoryEventHandlerService {
     private readonly storyGameService: StoryGameIdGeneratorService
   ) {}
 
-  complete(event: CompleteRoundEvent) {
+  complete(event: CompleteRoundEvent): void {
     const game = this.storyGameRepository.getGame(event.gameId);
     game.session.currentRound.selectedPoint = event.point;
     game.session.currentRound.name = event.title;
@@ -32,7 +33,7 @@ export class StoryEventHandlerService {
     game.updateClients();
   }
 
-  create(client: WebSocket, event: NewGameEvent) {
+  create(client: WebSocket, event: NewGameEvent): void {
     const session = new Session(this.storyGameService.generate(), event.story); // todo auto generate id
     const user = new User(session.users.length + 1, event.name);
     session.users.push(user);
@@ -47,7 +48,7 @@ export class StoryEventHandlerService {
     const game = this.storyGameRepository.getGame(gameId);
   }
 
-  join(client: WebSocket, event: JoinGameEvent) {
+  join(client: WebSocket, event: JoinGameEvent): void {
     const game = this.storyGameRepository.getGame(event.gameId);
     const user = new User(game.session.users.length + 1, event.name);
     game.session.users.push(user);
@@ -56,7 +57,7 @@ export class StoryEventHandlerService {
     game.updateClients();
   }
 
-  point(event: PointGameEvent) {
+  point(event: PointGameEvent): void {
     const game = this.storyGameRepository.getGame(event.gameId);
     const userId = event.userId;
     const user = game.session.users.find((u: User) => u.id === userId);
@@ -64,20 +65,25 @@ export class StoryEventHandlerService {
       throw new Error('User not found');
     }
 
-      user.userRound = {
-        selectedPoint: event.point,
-        hasVoted: event.point === null ? false : true,
-      };
+    user.userRound = {
+      selectedPoint: event.point,
+      hasVoted: event.point === null ? false : true,
+    };
 
     game.updateClients();
   }
 
-  reveal(event: RevealEvent) {
+  reveal(event: RevealEvent): void {
     const game = this.storyGameRepository.getGame(event.gameId);
     game.session.currentRoundRevealed = true;
 
     game.updateClients();
   }
+
+  updateRoundVotes(event: UpdateRoundVotesEvent): void {
+    const game = this.storyGameRepository.getGame(event.gameId);
+    game.session.currentRoundVotesCount = event.currentRoundVotesCount;
+
+    game.updateClients();
+  }
 }
-
-
