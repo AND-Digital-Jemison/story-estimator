@@ -77,10 +77,6 @@ export const Game = () => {
 
   const clickNumberEvent = (selectedNumber: number): void => {
     if (currentRoundVotesCount.mostVoted) {
-      console.log(
-        'already reveal, taking click as event to overwrite most voted'
-      );
-
       const newCurrentRoundVotesCount = {
         ...currentRoundVotesCount,
         mostVoted: selectedNumber,
@@ -88,7 +84,6 @@ export const Game = () => {
 
       setCurrentRoundVotesCount(newCurrentRoundVotesCount);
 
-      // client: send update to backend with new currentRoundVotesCount: event = change-most-voted
       socket.send({
         event: 'story-event-listener',
         data: {
@@ -98,10 +93,6 @@ export const Game = () => {
         },
       });
 
-      // 2 backend: updated session with new currentRoundVotesCount value
-      // 3 backend: broadcast
-
-      // 4 client receive updated session and replaces UI one
       return;
     }
 
@@ -177,7 +168,7 @@ export const Game = () => {
             <Title>Planning Poker</Title>
             <Story
               storyTitle={game.story}
-              mostVoted={currentRoundVotesCount.mostVoted}
+              mostVoted={game.currentRoundVotesCount?.mostVoted}
             />
             <CardContainer>
               {game.users.map(user => (

@@ -31,7 +31,6 @@ export class StoryEventFactoryService {
         this.storyEventService.reveal(event as RevealEvent);
         break;
       case StoryEvents.updateRoundVotes:
-        // todo : something wrong here?
         this.storyEventService.updateRoundVotes(event as UpdateRoundVotesEvent);
         break;
       case StoryEvents.complete:
