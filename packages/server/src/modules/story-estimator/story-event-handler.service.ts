@@ -30,7 +30,9 @@ export class StoryEventHandlerService {
     game.session.users.forEach((user: User) => {
       user.userRound = new UserRound();
     });
-    game.updateClients();
+    game.session.currentRoundRevealed = false;
+    game.session.currentRoundVotesCount.mostVoted = null;
+    game.updateClients("complete");
   }
 
   create(client: WebSocket, event: NewGameEvent): void {
@@ -40,7 +42,7 @@ export class StoryEventHandlerService {
     const game = new Game(session, client);
     this.storyGameRepository.addGame(game);
 
-    game.updateClients();
+    game.updateClients("create");
   }
 
   end(gameId: string): void {
@@ -54,7 +56,7 @@ export class StoryEventHandlerService {
     game.session.users.push(user);
     game.clients.push(client);
 
-    game.updateClients();
+    game.updateClients("join");
   }
 
   point(event: PointGameEvent): void {
@@ -70,20 +72,20 @@ export class StoryEventHandlerService {
       hasVoted: event.point === null ? false : true,
     };
 
-    game.updateClients();
+    game.updateClients("point");
   }
 
   reveal(event: RevealEvent): void {
     const game = this.storyGameRepository.getGame(event.gameId);
     game.session.currentRoundRevealed = true;
 
-    game.updateClients();
+    game.updateClients("reveal");
   }
 
   updateRoundVotes(event: UpdateRoundVotesEvent): void {
     const game = this.storyGameRepository.getGame(event.gameId);
     game.session.currentRoundVotesCount = event.currentRoundVotesCount;
 
-    game.updateClients();
+    game.updateClients("updateRoundVotes");
   }
 }

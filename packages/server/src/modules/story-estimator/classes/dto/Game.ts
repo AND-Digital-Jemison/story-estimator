@@ -1,6 +1,16 @@
-import { Logger } from "@nestjs/common";
-import { WebSocket } from "ws";
-import { Session } from "./Session";
+import { Logger } from '@nestjs/common';
+import { WebSocket } from 'ws';
+import { Session } from './Session';
+
+class SessionWithEvent {
+  session: Session;
+  event: string;
+
+  constructor(session: Session, event: string) {
+    this.session = session;
+    this.event = event;
+  }
+}
 
 export class Game {
   private readonly logger = new Logger(Game.name);
@@ -16,17 +26,17 @@ export class Game {
     this.clients.push(client);
   }
 
-  updateClients(): void {
-    const broadCastMessage = JSON.stringify(this.session);
+  updateClients(event: string): void {
+    const msg = new SessionWithEvent(this.session, event);
+
+    const broadCastMessage = JSON.stringify(msg);
     this.sendToClient(broadCastMessage);
   }
 
   private sendToClient(broadCastMessage: string): void {
     for (const client of this.clients) {
-      this.logger.log("broadcast", broadCastMessage);
+      this.logger.log('broadcast', broadCastMessage);
       client.send(broadCastMessage);
     }
   }
 }
-
-

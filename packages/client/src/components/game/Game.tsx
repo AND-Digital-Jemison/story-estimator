@@ -39,6 +39,11 @@ interface FullGame {
   currentRoundVotesCount?: RoundVotesCount;
 }
 
+interface FullGameWithEvent {
+  session: FullGame;
+  event: string;
+}
+
 interface RoundVotesCount {
   mostVoted: number;
   votesCount: Map<string, number>;
@@ -57,14 +62,25 @@ export const Game = () => {
     state: { socket },
   } = useSocket();
 
-  const messageHandler = (event: FullGame): void => {
+  const messageHandler = (gameWithEvent: FullGameWithEvent): void => {
+    const fullGame = gameWithEvent.session;
+    const event = gameWithEvent.event;
+
     // eslint-disable-next-line no-prototype-builtins
-    if (!event.hasOwnProperty('event')) {
-      setGame(event);
+    if (!fullGame.hasOwnProperty('event')) {
+      setGame(fullGame);
 
       // current round revealed: count votes
-      if (event.currentRoundRevealed) {
-        countCurrentRoundVotes(event);
+      if (fullGame.currentRoundRevealed) {
+        countCurrentRoundVotes(fullGame);
+      }
+
+      if (event === 'reveal') {
+        countCurrentRoundVotes(fullGame);
+      }
+
+      if (event === 'complete') {
+        setClickedNum(null);
       }
     }
   };
@@ -76,42 +92,46 @@ export const Game = () => {
   }, []);
 
   const clickNumberEvent = (selectedNumber: number): void => {
-    if (currentRoundVotesCount.mostVoted) {
-      const newCurrentRoundVotesCount = {
-        ...currentRoundVotesCount,
-        mostVoted: selectedNumber,
-      };
+    if (game.currentRoundRevealed) {
+      // Click number to update final votes
+      if (currentRoundVotesCount.mostVoted) {
+        const newCurrentRoundVotesCount = {
+          ...currentRoundVotesCount,
+          mostVoted: selectedNumber,
+        };
 
-      setCurrentRoundVotesCount(newCurrentRoundVotesCount);
+        setCurrentRoundVotesCount(newCurrentRoundVotesCount);
 
+        socket.send({
+          event: 'story-event-listener',
+          data: {
+            event: 'update-round-votes',
+            gameId: game.id,
+            currentRoundVotesCount: newCurrentRoundVotesCount,
+          },
+        });
+
+        return;
+      }
+    } else {
+      // Point event
+      const userId: number = game.users.find(
+        user => user.name === location.state.data.name
+      )?.id;
       socket.send({
         event: 'story-event-listener',
         data: {
-          event: 'update-round-votes',
+          event: 'point',
+          userId,
           gameId: game.id,
-          currentRoundVotesCount: newCurrentRoundVotesCount,
+          point: clickedNum === selectedNumber ? null : selectedNumber,
         },
       });
-
-      return;
+      // eslint-disable-next-line no-unused-expressions
+      clickedNum === selectedNumber
+        ? setClickedNum(null)
+        : setClickedNum(selectedNumber);
     }
-
-    const userId: number = game.users.find(
-      user => user.name === location.state.data.name
-    )?.id;
-    socket.send({
-      event: 'story-event-listener',
-      data: {
-        event: 'point',
-        userId,
-        gameId: game.id,
-        point: clickedNum === selectedNumber ? null : selectedNumber,
-      },
-    });
-    // eslint-disable-next-line no-unused-expressions
-    clickedNum === selectedNumber
-      ? setClickedNum(null)
-      : setClickedNum(selectedNumber);
   };
 
   const clickRevealEvent = (): void => {
@@ -120,6 +140,18 @@ export const Game = () => {
       data: {
         event: 'reveal',
         gameId: game.id,
+      },
+    });
+  };
+
+  const clickConfirmEvent = (): void => {
+    socket.send({
+      event: 'story-event-listener',
+      data: {
+        event: 'complete',
+        gameId: game.id,
+        point: game.currentRoundVotesCount.mostVoted,
+        title: game.story,
       },
     });
   };
@@ -184,9 +216,11 @@ export const Game = () => {
             </CardContainer>
             <GameButton
               disabled={isRevealButtonDisabled()}
-              onClick={clickRevealEvent}
+              onClick={
+                game.currentRoundRevealed ? clickConfirmEvent : clickRevealEvent
+              }
             >
-              Reveal
+              {game.currentRoundRevealed ? 'Confirm' : 'Reveal'}
             </GameButton>
             <CardContainer>
               {fiboNums.map((num, index) => (
