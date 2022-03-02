@@ -5,6 +5,7 @@ import { JoinGameEvent } from './classes/events/join-game-event';
 import { NewGameEvent } from './classes/events/new-game-event';
 import { PointGameEvent } from './classes/events/point-game-event';
 import { RevealEvent } from './classes/events/reveal-event';
+import { UpdateRoundVotesEvent } from './classes/events/update-round-votes-event';
 import { StoryEvents } from './constants/story-events';
 import { GameEvent } from './interfaces/game-events.interface';
 import { StoryEventHandlerService } from './story-event-handler.service';
@@ -24,11 +25,14 @@ export class StoryEventFactoryService {
         this.storyEventService.join(client, event as JoinGameEvent);
         break;
       case StoryEvents.point:
-         this.storyEventService.point(event as PointGameEvent);
-         break;
+        this.storyEventService.point(event as PointGameEvent);
+        break;
       case StoryEvents.reveal:
-         this.storyEventService.reveal(event as RevealEvent);
-      break;
+        this.storyEventService.reveal(event as RevealEvent);
+        break;
+      case StoryEvents.updateRoundVotes:
+        this.storyEventService.updateRoundVotes(event as UpdateRoundVotesEvent);
+        break;
       case StoryEvents.complete:
         this.storyEventService.complete(event as CompleteRoundEvent);
         break;

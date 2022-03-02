@@ -4,7 +4,7 @@ export const Body = styled.div`
   @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap');
   background-color: #2897ff;
   margin: auto;
-  height: 1000px;
+  height: 2000px;
   padding: 100px;
   font-family: 'Poppins', sans-serif;
   color: #2897ff;

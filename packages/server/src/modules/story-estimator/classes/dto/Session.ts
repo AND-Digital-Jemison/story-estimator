@@ -1,5 +1,7 @@
 import { Round } from './Round';
+import { RoundVotesCount } from './RoundVotesCount';
 import { User } from './User';
+
 
 export class Session {
   id: string;
@@ -7,6 +9,7 @@ export class Session {
   rounds: Round[];
   currentRound: Round;
   currentRoundRevealed: boolean;
+  currentRoundVotesCount?: RoundVotesCount;
   story?: string;
 
   constructor(id: string, story?: string) {
