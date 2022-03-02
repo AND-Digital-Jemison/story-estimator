@@ -5,6 +5,7 @@ import { Round } from './classes/dto/Round';
 import { UserRound } from './classes/dto/UserRound';
 import { Session } from './classes/dto/Session';
 import { User } from './classes/dto/User';
+import { RoundVotesCount } from './classes/dto/RoundVotesCount';
 import { CompleteRoundEvent } from './classes/events/complete-round-event';
 import { JoinGameEvent } from './classes/events/join-game-event';
 import { NewGameEvent } from './classes/events/new-game-event';
@@ -32,7 +33,7 @@ export class StoryEventHandlerService {
     });
     game.session.currentRoundRevealed = false;
     game.session.currentRoundVotesCount.mostVoted = null;
-    game.updateClients("complete");
+    game.updateClients('complete');
   }
 
   create(client: WebSocket, event: NewGameEvent): void {
@@ -42,7 +43,7 @@ export class StoryEventHandlerService {
     const game = new Game(session, client);
     this.storyGameRepository.addGame(game);
 
-    game.updateClients("create");
+    game.updateClients('create');
   }
 
   end(gameId: string): void {
@@ -56,7 +57,7 @@ export class StoryEventHandlerService {
     game.session.users.push(user);
     game.clients.push(client);
 
-    game.updateClients("join");
+    game.updateClients('join');
   }
 
   point(event: PointGameEvent): void {
@@ -72,20 +73,49 @@ export class StoryEventHandlerService {
       hasVoted: event.point === null ? false : true,
     };
 
-    game.updateClients("point");
+    game.updateClients('point');
   }
 
   reveal(event: RevealEvent): void {
     const game = this.storyGameRepository.getGame(event.gameId);
     game.session.currentRoundRevealed = true;
 
-    game.updateClients("reveal");
+    const roundUsers = game.session.users;
+    const votesCount = new Map<string, number>();
+
+    roundUsers.forEach(user => {
+      const userVote = user.userRound.selectedPoint;
+
+      votesCount[userVote] = votesCount[userVote]
+        ? votesCount[userVote] + 1
+        : 1;
+    });
+
+    // extract key of most voted point from count
+    let max = 0;
+    let mostVoted = '';
+
+    for (const voteKey in votesCount) {
+      if (votesCount[voteKey] >= max) {
+        max = votesCount[voteKey];
+        mostVoted = voteKey;
+      }
+    }
+
+    const roundVotesCount: RoundVotesCount = {
+      mostVoted: parseInt(mostVoted, 10),
+      votesCount: votesCount,
+    };
+
+    game.session.currentRoundVotesCount = roundVotesCount;
+
+    game.updateClients('reveal');
   }
 
   updateRoundVotes(event: UpdateRoundVotesEvent): void {
     const game = this.storyGameRepository.getGame(event.gameId);
     game.session.currentRoundVotesCount = event.currentRoundVotesCount;
 
-    game.updateClients("updateRoundVotes");
+    game.updateClients('updateRoundVotes');
   }
 }
