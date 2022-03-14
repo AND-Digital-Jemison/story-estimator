@@ -1,6 +1,5 @@
 import React, { Suspense } from 'react';
 import { render } from 'react-dom';
-import { BrowserRouter as Router } from 'react-router-dom';
 import { SocketProvider } from '~/components/hooks/web-socket/socket-context';
 
 import { APP_ROOT } from '~/config';

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory } from "react-router";
+import { useHistory } from 'react-router';
 import { Message } from '../../hooks/web-socket/types';
 import {
   FormContainer,
@@ -12,26 +12,28 @@ import {
 import { JoinData } from '../types';
 import { LandingEvent } from '../event-constants';
 
-export const JoinGame = (props: { name: string, validateNameCallback: (nameValid: boolean) => void }) => {
+export const JoinGame = (props: {
+  name: string;
+  validateNameCallback: (nameValid: boolean) => void;
+}) => {
   const { name, validateNameCallback } = props;
   const [roomCode, setRoomCode] = useState('');
   const [roomCodeValid, setRoomCodeValid] = useState(true);
   const history = useHistory();
-
 
   const handleClick = (e: any) => {
     e.preventDefault();
     const data: JoinData = {
       name: name,
       gameId: roomCode,
-      event: LandingEvent.JOIN
-    }
+      event: LandingEvent.JOIN,
+    };
 
     if (inputValid(data)) {
       const message: Message = {
-        event: "story-event-listener",
-        data: data
-      }
+        event: 'story-event-listener',
+        data: data,
+      };
 
       history.push('/game', message);
     }
@@ -42,21 +44,19 @@ export const JoinGame = (props: { name: string, validateNameCallback: (nameValid
     if (data.name.length === 0) {
       validateNameCallback(false);
       valid = false;
-    }
-    else {
+    } else {
       validateNameCallback(true);
     }
 
     if (data.gameId.length === 0) {
       setRoomCodeValid(false);
       valid = false;
-    }
-    else {
+    } else {
       setRoomCodeValid(true);
     }
 
     return valid;
-  }
+  };
 
   return (
     <FormContainer>
@@ -72,9 +72,9 @@ export const JoinGame = (props: { name: string, validateNameCallback: (nameValid
         />
         <JoinButton onClick={e => handleClick(e)}>JOIN</JoinButton>
       </PathContainer>
-      {!roomCodeValid &&
+      {!roomCodeValid && (
         <ValidationLabel>Please enter a valid room code</ValidationLabel>
-      }
+      )}
     </FormContainer>
   );
 };
