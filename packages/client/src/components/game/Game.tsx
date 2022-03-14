@@ -65,7 +65,7 @@ export const Game = () => {
     const event = gameWithEvent.event;
 
     // eslint-disable-next-line no-prototype-builtins
-    if (!fullGame.hasOwnProperty('event')) {
+    if (!fullGame?.hasOwnProperty('event')) {
       setGame(fullGame);
 
       if (event === 'complete') {
