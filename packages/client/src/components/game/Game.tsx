@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-key */
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router';
+import { useHistory, useLocation } from 'react-router';
 import { useSocket } from '~/components/hooks/web-socket/socket-context';
 import { Message } from '~/components/hooks/web-socket/types';
 import {
@@ -53,6 +53,7 @@ export const Game = () => {
   const [game, setGame] = useState<FullGame | undefined>();
   const [clickedNum, setClickedNum] = useState(null);
   const location = useLocation();
+  const history = useHistory();
 
   const fiboNums = [0, 1, 2, 3, 5, 8, 13, 21, 34, 55];
 
@@ -75,6 +76,12 @@ export const Game = () => {
   };
 
   useEffect(() => {
+    // redirect to landing page if user skipped it
+    if (!location.state) {
+      history.push('/');
+      return;
+    }
+
     socket.connect(messageHandler).then(() => {
       socket.send(location.state as Message);
     });
