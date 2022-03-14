@@ -12,7 +12,9 @@ export class StoryGameRepository {
         return game;
       }
     }
-    throw new Error('Could not find game');
+    console.log('Could not find game: ', id);
+
+    return null;
   }
 
   public addGame(game: Game): void {

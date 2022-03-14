@@ -17,6 +17,7 @@ import {
 import { Story } from './Story';
 import { Card } from './Card';
 import { Points } from './Points';
+import { GameNotFound } from './GameNotFound';
 
 interface CurrentRound {
   selectedPoint?: string;
@@ -51,6 +52,7 @@ interface RoundVotesCount {
 
 export const Game = () => {
   const [game, setGame] = useState<FullGame | undefined>();
+  const [gameNotFound, setGameNotFound] = useState<boolean>(false);
   const [clickedNum, setClickedNum] = useState(null);
   const location = useLocation();
   const history = useHistory();
@@ -65,6 +67,12 @@ export const Game = () => {
     const fullGame = gameWithEvent.session;
     const event = gameWithEvent.event;
 
+    if (event === 'game-not-found') {
+      setGameNotFound(true);
+      return;
+    }
+
+    console.log('msg', gameWithEvent);
     // eslint-disable-next-line no-prototype-builtins
     if (!fullGame?.hasOwnProperty('event')) {
       setGame(fullGame);
@@ -202,6 +210,8 @@ export const Game = () => {
             </CardContainer>
           </GameContainer>
         </RoomContainer>
+      ) : gameNotFound ? (
+        <GameNotFound gameId={location.state.data.gameId}></GameNotFound>
       ) : (
         <div>Connecting</div>
       )}
