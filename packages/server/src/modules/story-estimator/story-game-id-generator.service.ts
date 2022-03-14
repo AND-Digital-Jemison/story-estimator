@@ -16,6 +16,7 @@ export class StoryGameIdGeneratorService {
         .toString(36)
         .slice(2, this.gameIdLength + 2);
 
+      // TODO: look for a more "scalable" solution for this check
       if (!existingGameIds.includes(id)) {
         newGameId = id;
       }
