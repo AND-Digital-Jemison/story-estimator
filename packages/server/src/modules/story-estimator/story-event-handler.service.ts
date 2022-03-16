@@ -53,6 +53,17 @@ export class StoryEventHandlerService {
 
   join(client: WebSocket, event: JoinGameEvent): void {
     const game = this.storyGameRepository.getGame(event.gameId);
+
+    if (!game) {
+      const notFoundMsg = {
+        session: null,
+        event: 'game-not-found',
+      };
+      client.send(JSON.stringify(notFoundMsg));
+
+      return;
+    }
+
     const user = new User(game.session.users.length + 1, event.name);
     game.session.users.push(user);
     game.clients.push(client);

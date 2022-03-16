@@ -112,3 +112,14 @@ export const GameButton = styled(Button)`
   margin-top: 35px;
   margin-bottom: 100px;
 `;
+
+export const GameNotFoundContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2rem;
+  padding: 1rem;
+  font-size: 24px;
+  font-family: 'Poppins', sans-serif;
+  color: #2897ff;
+`;

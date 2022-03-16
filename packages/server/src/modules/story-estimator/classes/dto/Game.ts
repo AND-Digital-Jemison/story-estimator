@@ -31,6 +31,7 @@ export class Game {
 
     const broadCastMessage = JSON.stringify(msg);
     this.sendToClient(broadCastMessage);
+    this.lastInteractionTime = new Date();
   }
 
   private sendToClient(broadCastMessage: string): void {
@@ -38,5 +39,6 @@ export class Game {
       this.logger.log('broadcast', broadCastMessage);
       client.send(broadCastMessage);
     }
+    this.lastInteractionTime = new Date();
   }
 }

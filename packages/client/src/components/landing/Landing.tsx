@@ -1,26 +1,24 @@
-import React, { useState } from "react";
-import { CreateGame } from "./create-game/CreateGame";
-import { JoinGame } from "./join-game/JoinGame";
+import React, { useState } from 'react';
+import { CreateGame } from './create-game/CreateGame';
+import { JoinGame } from './join-game/JoinGame';
 import {
   Body,
   Container,
-  Main,
-  Title,
   FormContainer,
   Input,
   Label,
-  ValidationLabel
-} from "./landing-styles";
+  Main,
+  Title,
+  ValidationLabel,
+} from './landing-styles';
 
 export const Landing = () => {
-  const [name, setName] = useState("");
+  const [name, setName] = useState('');
   const [nameValid, setNameValid] = useState(true);
-
 
   const validateName = (nameValid: boolean) => {
     setNameValid(nameValid);
   };
-
 
   return (
     <Body>
@@ -35,12 +33,11 @@ export const Landing = () => {
               name="user-name"
               value={name}
               maxLength={30}
-              onChange={e => setName(e.currentTarget.value)
-              }
+              onChange={e => setName(e.currentTarget.value)}
             />
-            {!nameValid &&
-            <ValidationLabel>Please enter a name</ValidationLabel>
-            }
+            {!nameValid && (
+              <ValidationLabel>Please enter a name</ValidationLabel>
+            )}
           </FormContainer>
           <JoinGame name={name} validateNameCallback={validateName} />
           <p>OR</p>

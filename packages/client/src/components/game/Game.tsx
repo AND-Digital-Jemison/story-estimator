@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-key */
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router';
+import { useHistory, useLocation } from 'react-router';
 import { useSocket } from '~/components/hooks/web-socket/socket-context';
 import { Message } from '~/components/hooks/web-socket/types';
 import {
@@ -17,6 +17,7 @@ import {
 import { Story } from './Story';
 import { Card } from './Card';
 import { Points } from './Points';
+import { GameNotFound } from './GameNotFound';
 
 interface CurrentRound {
   selectedPoint?: string;
@@ -51,8 +52,10 @@ interface RoundVotesCount {
 
 export const Game = () => {
   const [game, setGame] = useState<FullGame | undefined>();
+  const [gameNotFound, setGameNotFound] = useState<boolean>(false);
   const [clickedNum, setClickedNum] = useState(null);
   const location = useLocation();
+  const history = useHistory();
 
   const fiboNums = [0, 1, 2, 3, 5, 8, 13, 21, 34, 55];
 
@@ -64,8 +67,14 @@ export const Game = () => {
     const fullGame = gameWithEvent.session;
     const event = gameWithEvent.event;
 
+    if (event === 'game-not-found') {
+      setGameNotFound(true);
+      return;
+    }
+
+    console.log('msg', gameWithEvent);
     // eslint-disable-next-line no-prototype-builtins
-    if (!fullGame.hasOwnProperty('event')) {
+    if (!fullGame?.hasOwnProperty('event')) {
       setGame(fullGame);
 
       if (event === 'complete') {
@@ -75,6 +84,12 @@ export const Game = () => {
   };
 
   useEffect(() => {
+    // redirect to landing page if user skipped it
+    if (!location.state) {
+      history.push('/');
+      return;
+    }
+
     socket.connect(messageHandler).then(() => {
       socket.send(location.state as Message);
     });
@@ -195,6 +210,8 @@ export const Game = () => {
             </CardContainer>
           </GameContainer>
         </RoomContainer>
+      ) : gameNotFound ? (
+        <GameNotFound gameId={location.state.data.gameId}></GameNotFound>
       ) : (
         <div>Connecting</div>
       )}

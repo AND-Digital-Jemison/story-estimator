@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
-import { StoryEventFactoryService } from "./story-event-factory.service";
-import { StoryEventHandlerService } from "./story-event-handler.service";
-import { StoryEventGateway } from "./story-event.gateway";
-import { StoryGameIdGeneratorService } from "./story-game-id-generator.service";
-import { StoryGameRepository } from "./story-game.repository";
+import { GamesManagerService } from './games-manager.service';
+import { StoryEventFactoryService } from './story-event-factory.service';
+import { StoryEventHandlerService } from './story-event-handler.service';
+import { StoryEventGateway } from './story-event.gateway';
+import { StoryGameIdGeneratorService } from './story-game-id-generator.service';
+import { StoryGameRepository } from './story-game.repository';
 
 @Module({
   providers: [
@@ -11,7 +12,8 @@ import { StoryGameRepository } from "./story-game.repository";
     StoryEventHandlerService,
     StoryEventFactoryService,
     StoryGameRepository,
-    StoryGameIdGeneratorService
+    StoryGameIdGeneratorService,
+    GamesManagerService,
   ],
 })
 export class StoryEstimatorModule {}
