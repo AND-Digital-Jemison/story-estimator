@@ -17,9 +17,22 @@ export class StoryGameRepository {
     return null;
   }
 
+  public getGamesLastInteractionMap() {
+    return this.games.map(game => {
+      return {
+        gameId: game.session.id,
+        lastInteraction: new Date(game.lastInteractionTime).getTime(),
+      };
+    });
+  }
+
   public addGame(game: Game): void {
     this.games.push(game);
     console.log('All games', this.games);
+  }
+
+  public deleteGame(gameId: string): void {
+    this.games = this.games.filter(game => game.session.id !== gameId);
   }
 
   public getExistingGameIds(): string[] {
